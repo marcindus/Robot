@@ -1,128 +1,118 @@
-#define BLYNK_PRINT Serial 
-#include <ESP8266WiFi.h> 
-#include <BlynkSimpleEsp8266.h> 
 #include "../.cfg/wifi_credentials.h"
-/*
-static const uint8_t D0   = 16;
-static const uint8_t D1   = 5;
-static const uint8_t D2   = 4;
-static const uint8_t D3   = 0;
-static const uint8_t D4   = 2;
-static const uint8_t D5   = 14;
-static const uint8_t D6   = 12;
-static const uint8_t D7   = 13;
-static const uint8_t D8   = 15;
-static const uint8_t D9   = 3;
-static const uint8_t D10  = 1;
-*/
 
-int PWMA=D1;    //Right side    D1 -> 5
-int PWMB=D2;    //Left side     D2 -> 4
-int DA=D3;      //Right reverse   D3 -> 0
-int DB=D4;      //Left reverse    D4 -> 2
+#include <ESP8266WiFi.h> 
+#include "move.h"
 
-unsigned int maxSpeed = 1023;
-unsigned int minSpeed = 650;
-unsigned int noSpeed = 0;
-unsigned int right_A_Correction; //V3, motorA range   0 100
-unsigned int left_B_Correction;  //V4, motorB range   0 100
 
-void setup(){ 
- // Debug console 
- Serial.begin(57600); 
- Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,13), 8080);
- pinMode(PWMA, OUTPUT); 
- pinMode(PWMB, OUTPUT); 
- pinMode(DA, OUTPUT); 
- pinMode(DB, OUTPUT); 
+WiFiServer server(80);
+
+void setup()
+{ 
+    Serial.begin(57600); 
+
+    pinMode(PWMA, OUTPUT); 
+    pinMode(PWMB, OUTPUT); 
+    pinMode(DA, OUTPUT); 
+    pinMode(DB, OUTPUT); 
+    delay(10);
+
+    Serial.println(); Serial.println(); Serial.print("Connecting to "); Serial.println(ssid);
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+    Serial.println(""); Serial.println("WiFi connected");
+    server.begin(); Serial.println("Server started");
+    Serial.print("Use this URL to connect: ");
+    Serial.print("http://");
+    Serial.print(WiFi.localIP());
+    Serial.println("/");
+
 } 
-void loop(){ 
+ 
+ 
+void loop() {
+  WiFiClient client = server.available();
+  if (!client) { return; } 
 
-Blynk.run(); 
+  Serial.println("new client");
+  while(!client.available()){ delay(1); }
+ 
+  // Read the first line of the request
+  String request = client.readStringUntil('\r');
+  Serial.println(request);
+  client.flush();
+ 
+  // Match the request
+ 
+  String value="";
+  if (request.indexOf("/RIGHT") != -1)  
+  { 
+    right_turn();
+    value = "RIGHT";
+  }
+
+  if (request.indexOf("/LEFT") != -1)  
+  {
+      left_turn();
+      value ="LEFT";
+  }
+
+  if (request.indexOf("/FORWARD") != -1)  
+  {
+      forward();
+      value ="FORWARD";
+  }
   
-} 
+  if (request.indexOf("/BACKWARD") != -1)  
+  {
+       backward();
+       value ="BACKWARD";
+  }
+  
+  if (request.indexOf("/STOP") != -1)  
+  {
+      stay();
+      value ="STOP";
+  }
+  
+  // Return the response
+  client.println("HTTP/1.1 200 OK");
+  client.println("Content-Type: text/html");
+  client.println(""); //  do not forget this one
+  client.println("<!DOCTYPE HTML>");
+  client.println("<html>");
+  client.print("Your car is moving ");
 
-BLYNK_WRITE(V3) { right_A_Correction = param.asInt(); }
-BLYNK_WRITE(V4) { left_B_Correction = param.asInt(); }
-
-
-// Handling Joystick data 
-BLYNK_WRITE(V1){ 
-int x = param[0].asInt(); 
-int y = param[1].asInt();  
-Serial.println(left_B_Correction);
-Serial.println(right_A_Correction);
-
-if(x==-1 && y==-1){             //Backward and Left     
-     analogWrite(PWMA, noSpeed); 
-     digitalWrite(DA, LOW); 
-     
-     analogWrite(PWMB, maxSpeed); 
-     digitalWrite(DB, HIGH); 
-     Serial.println("back left");
-
-}else if(x==-1 && y==0){        //Left Turn 
-     analogWrite(PWMA, minSpeed); 
-     digitalWrite(DA, HIGH); 
-    
-     analogWrite(PWMB, noSpeed); 
-     digitalWrite(DB, LOW); 
-      Serial.println("turn left");
-      
-}else if(x==-1 && y==1){        //Forward and Left     
-     analogWrite(PWMA, noSpeed); 
-     digitalWrite(DA, LOW); 
-    
-     analogWrite(PWMB, maxSpeed); 
-     digitalWrite(DB, LOW); 
-          Serial.println("Forward and Left");
-          
-}else if(x==0 && y==-1){        //Backward     
-     analogWrite(PWMA, maxSpeed-right_A_Correction); 
-     digitalWrite(DA, HIGH); 
-     
-     analogWrite(PWMB, maxSpeed-left_B_Correction); 
-     digitalWrite(DB, HIGH);
-     Serial.println("Backward");
-
-}else if(x==0 && y==0){        //Stay 
-     analogWrite(PWMA, noSpeed); 
-     digitalWrite(PWMA, LOW); 
-     digitalWrite(PWMB, LOW); 
-     digitalWrite(DA, LOW); 
-     
-     analogWrite(PWMB, noSpeed); 
-     digitalWrite(DB, LOW); 
-
-}else if(x==0 && y==1){        //Forward 
-     analogWrite(PWMA, maxSpeed-right_A_Correction); 
-     digitalWrite(DA, LOW); 
-    
-     analogWrite(PWMB, maxSpeed-left_B_Correction); 
-     digitalWrite(DB, LOW); 
-      Serial.println("Forward");
-}else if(x==1 && y==-1){        //Backward and Right     
-
-     analogWrite(PWMA, maxSpeed); 
-     digitalWrite(DA, HIGH); 
-     
-     analogWrite(PWMB, noSpeed); 
-     digitalWrite(DB, LOW); 
-      Serial.println("Backward and Right");
-}else if(x==1 && y==0){        //Right turn 
-     analogWrite(PWMA, noSpeed); 
-     digitalWrite(DA, LOW); 
-     
-     analogWrite(PWMB, minSpeed); 
-     digitalWrite(DB, HIGH); 
-       Serial.println("Right turn ");
-}else if(x==1 && y==1){        //Forward and Right 
-     analogWrite(PWMA, maxSpeed); 
-     digitalWrite(DA, LOW); 
-     
-     analogWrite(PWMB, noSpeed); 
-     digitalWrite(DB, LOW);
-       Serial.println("Forward and Right");
- } 
+//WHAT IS THAT?  ...... client.print(value); ...?
+  if(value == "RIGHT") {
+    client.print("RIGHT");
+  } else if(value="LEFT"){
+    client.print("LEFT");
+  }
+  else if(value=="FORWARD")
+  {
+    client.print("FORWARD");
+  }
+  else if(value=="BACKWARD")
+  {
+    client.print("BACKWARD");
+  }
+  else if(value=="STOP")
+  {
+    client.print("STOP");
+  }
+  
+  client.println("<br><br>");
+  client.println("<a href=\"/RIGHT\"\"><button>RIGHT </button></a>");
+  client.println("<a href=\"/LEFT\"\"><button>LEFT </button></a><br />");  
+  client.println("<a href=\"/FORWARD\"\"><button>FORWARD </button></a><br />"); 
+  client.println("<a href=\"/BACKWARD\"\"><button>BACKWARD </button></a><br />"); 
+  client.println("<a href=\"/STOP\"\"><button>STOP </button></a><br />"); 
+  client.println("</html>");
+ 
+  delay(1); Serial.println("Client disonnected"); Serial.println("");
 }
+ 
  
