@@ -1,7 +1,7 @@
 # Robot
 Robot car with nodemcu v2
 
-Inspired by: 
+Source: 
 
 https://www.instructables.com/id/Simplest-Wifi-Car-Using-ESP8266-Motorshield/
 
