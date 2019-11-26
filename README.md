@@ -11,14 +11,14 @@ https://www.instructables.com/id/WiFi-Car-Using-NodeMCU/
 
 # Building tests
 
-mkdir build
-cd build
-cmake ../../../<path to CMakeList.txt>
-make
-./tests
+mkdir build  
+cd build  
+cmake ../../../<path to CMakeList.txt>  
+make  
+./tests  
 
 # Building binary
 
-pio run
-pio run -t upload
+pio run  
+pio run -t upload  
 
