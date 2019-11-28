@@ -17,8 +17,9 @@ cmake ../../../<path to CMakeList.txt>
 make
 ./tests
 
-# Building binary
+# Building with platformio (and upload)
 
 pio run
 pio run -t upload
+
 
