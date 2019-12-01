@@ -1,3 +1,7 @@
+#ifndef NODEMCU_PINOUT_H
+#define NODEMCU_PINOUT_H
+
+
 //NodeMCU has weird pin mapping.
 //Pin numbers written on the board itself do not correspond to ESP8266 GPIO pin numbers. We have constants defined to make using this board easier:
 
@@ -13,4 +17,4 @@ static const uint8_t D8   = 15;
 static const uint8_t D9   = 3;
 static const uint8_t D10  = 1;
 
-
+#endif // NODEMCU_PINOUT_H

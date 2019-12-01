@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "ArduinoWrapperMock.hpp"
-
+#include "GpioPortMock.hpp"
 
 using ::testing::Return;
 

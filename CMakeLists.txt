@@ -15,6 +15,7 @@ include_directories(
 file(GLOB TEST_SOURCES
     "unittest.cpp"
     "test/*.cpp"
+    "src/*.cpp"
     )
 
 
