@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 project(robot_test)
 
 set(CMAKE_CXX_STANDARD 14)
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+#add_compile_options(-Wall -Wextra -pedantic -Werror)
+add_compile_options(-Wall  -Werror)
 
 include(cmake/GTest.cmake)
 
@@ -15,9 +16,10 @@ include_directories(
 file(GLOB TEST_SOURCES
     "unittest.cpp"
     "test/*.cpp"
-    "src/*.cpp"
-    )
+    "src/GpioPort.cpp"
+    "src/GpioException.cpp"
 
+    )
 
 add_executable(tests ${SOURCES} ${TEST_SOURCES})
 target_link_libraries(tests

@@ -1,8 +1,7 @@
 #ifndef IARDUINOWRAPPER_HPP
 #define IARDUINOWRAPPER_HPP
 
-#include "Arduino_Types.hpp"
-#include "NodemcuV2_Types.hpp"
+#include "Types.hpp"
 
 class IArduinoWrapper
 {
