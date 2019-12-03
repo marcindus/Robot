@@ -1,6 +1,10 @@
 #ifndef ARDUINO_TYPES_HPP
 #define ARDUINO_TYPES_HPP
 
+enum class MotorDirection
+{
+    Forward = 1, Backward = 0
+};
 
 enum class GpioMode
 {

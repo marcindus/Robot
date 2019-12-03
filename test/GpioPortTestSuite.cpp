@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include "ArduinoWrapperMock.hpp"
 #include "GpioPortMock.hpp"
 #include "GpioPort.hpp"
@@ -6,6 +7,8 @@
 #include "Types.hpp"
 
 using ::testing::Return;
+using ::testing::StrictMock;
+using ::testing::NiceMock;
 
 
 class GpioPortTestSuite : public ::testing::Test
@@ -18,7 +21,7 @@ public:
     {
     }
 
-    ArduinoWrapperMock wrapperMock;
+    NiceMock<ArduinoWrapperMock> wrapperMock;
     GpioPort gpioPortOutput;
     GpioPort gpioPortInput;
     GpioPort gpioPortPwm;
