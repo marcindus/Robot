@@ -1,31 +1,26 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "ArduinoWrapperMock.hpp"
-#include "GpioPortMock.hpp"
 #include "GpioPort.hpp"
 #include "GpioException.hpp"
 #include "Types.hpp"
 
 using ::testing::Return;
-using ::testing::StrictMock;
 using ::testing::NiceMock;
 
-
-class GpioPortTestSuite : public ::testing::Test
+/*
+class  MotorTestSuite : public ::testing::Test
 {
 public:
-    GpioPortTestSuite() :
-        gpioPortOutput(wrapperMock, GpioNodemcuV2::GpioNodemcuV2_D1, GpioMode::GpioMode_Output),
-        gpioPortInput(wrapperMock, GpioNodemcuV2::GpioNodemcuV2_D5, GpioMode::GpioMode_Input),
+    MotorTestSuite() :
         gpioPortPwm(wrapperMock, GpioNodemcuV2::GpioNodemcuV2_D4, GpioMode::GpioMode_Pwm)
     {
     }
 
     NiceMock<ArduinoWrapperMock> wrapperMock;
-    GpioPort gpioPortOutput;
-    GpioPort gpioPortInput;
-    GpioPort gpioPortPwm;
+    Motor m_sut;
 };
+
 
 TEST_F(GpioPortTestSuite, checkWpiNumberAndGpioMode)
 {
@@ -35,5 +30,4 @@ TEST_F(GpioPortTestSuite, checkWpiNumberAndGpioMode)
     EXPECT_EQ(gpioPortPwm.getMode(), GpioMode::GpioMode_Pwm);
 }
 
-
-//Todo: add tests with exceptions etc...
+*/

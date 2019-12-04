@@ -1,5 +1,5 @@
-#ifndef IGPIOPORTMOCK_HPP
-#define IGPIOPORTMOCK_HPP 
+#ifndef GPIOPORTMOCK_HPP
+#define GPIOPORTMOCK_HPP 
 
 #include <gmock/gmock.h>
 #include "IGpioPort.hpp"
@@ -14,4 +14,4 @@ class GpioPortMock : public IGpioPort
 
 };
 
-#endif // IGPIOPORTMOCK_HPP 
+#endif // GPIOPORTMOCK_HPP 
