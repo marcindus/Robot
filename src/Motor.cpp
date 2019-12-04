@@ -12,27 +12,28 @@ Motor::Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p
 {
 }
 
-void  Motor::RunForward()
+void  Motor::runForward()
 {
 }
-void Motor::RunForward(unsigned int speed)
-{
-}
-
-void Motor::Stop()
+void Motor::runForward(unsigned int speed)
 {
 }
 
-void Motor::RunBackward()
+void Motor::stop()
 {
 }
 
-void Motor::RunBackward(unsigned int speed)
+void Motor::runBackward()
+{
+}
+
+void Motor::runBackward(unsigned int speed)
 {
 }
 
 bool Motor::isRunning()
 {
+    return m_isRunning;
 }
 
 MotorDirection Motor::getDirection()

@@ -1,33 +1,32 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "ArduinoWrapperMock.hpp"
-#include "GpioPort.hpp"
-#include "GpioException.hpp"
-#include "Types.hpp"
+#include "GpioPortMock.hpp"
+#include "Motor.hpp"
+#include <memory>
 
 using ::testing::Return;
 using ::testing::NiceMock;
 
-/*
+
 class  MotorTestSuite : public ::testing::Test
 {
 public:
-    MotorTestSuite() :
-        gpioPortPwm(wrapperMock, GpioNodemcuV2::GpioNodemcuV2_D4, GpioMode::GpioMode_Pwm)
+    MotorTestSuite() : 
+        m_gpioPortMock(new GpioPortMock), 
+        m_rawGpioPtr(m_gpioPortMock.get()),
+        m_sut(std::move(m_gpioPortMock)
     {
     }
-
-    NiceMock<ArduinoWrapperMock> wrapperMock;
+    std::unique_ptr<GpioPortMock> m_gpioPortMock;
+    GpioPortMock* m_rawGpioPtr;
     Motor m_sut;
 };
 
 
-TEST_F(GpioPortTestSuite, checkWpiNumberAndGpioMode)
+TEST_F(MotorTestSuite, whenMotorRunIsCalledThenisRunningShouldReturnTrue)
 {
-    EXPECT_EQ(gpioPortOutput.getGpioPort(), GpioNodemcuV2::GpioNodemcuV2_D1);
-    EXPECT_EQ(gpioPortOutput.getMode(), GpioMode::GpioMode_Output);
-    EXPECT_EQ(gpioPortInput.getMode(), GpioMode::GpioMode_Input);
-    EXPECT_EQ(gpioPortPwm.getMode(), GpioMode::GpioMode_Pwm);
+  EXPECT_CALL(*m_portRawPtr, write(GpioValue::GpioValue_High));
+  m_sut.runForward();
+  EXPECT_EQ(m_sut.isRunning(), true);
 }
 
-*/
