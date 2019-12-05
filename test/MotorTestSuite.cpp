@@ -37,7 +37,7 @@ TEST_F(MotorTestSuite, motorRunsForward)
     EXPECT_EQ(m_sut.getDirection(), MotorDirection::Forward);
 }
 
-TEST_F(MotorTestSuite, motorRunsBackwar)
+TEST_F(MotorTestSuite, motorRunsBackward)
 {
     unsigned int  speed = 800;
     EXPECT_CALL(*m_rawSpeedGpioPtr, write(800));
@@ -47,4 +47,12 @@ TEST_F(MotorTestSuite, motorRunsBackwar)
     EXPECT_EQ(m_sut.getDirection(), MotorDirection::Backward);
 }
 
+
+TEST_F(MotorTestSuite, motorStop)
+{
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(0));
+    m_sut.stop();
+    EXPECT_EQ(m_sut.isRunning(), false);
+    EXPECT_EQ(m_sut.getDirection(), MotorDirection::Forward);
+}
 

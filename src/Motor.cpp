@@ -24,7 +24,12 @@ void Motor::runForward(unsigned int speed)
 
 void Motor::stop()
 {
+    m_speedPin->write(0);
+    m_isRunning = false;
+    m_direction = MotorDirection::Forward;
+
 }
+
 
 void Motor::runBackward(unsigned int speed)
 {
