@@ -27,7 +27,7 @@ public:
 };
 
 
-TEST_F(MotorTestSuite, whenMotorRunIsCalledThenisRunningShouldReturnTrue)
+TEST_F(MotorTestSuite, motorRunsForward)
 {
     unsigned int  speed = 800;
     EXPECT_CALL(*m_rawSpeedGpioPtr, write(800));
@@ -36,4 +36,15 @@ TEST_F(MotorTestSuite, whenMotorRunIsCalledThenisRunningShouldReturnTrue)
     EXPECT_EQ(m_sut.isRunning(), true);
     EXPECT_EQ(m_sut.getDirection(), MotorDirection::Forward);
 }
+
+TEST_F(MotorTestSuite, motorRunsBackwar)
+{
+    unsigned int  speed = 800;
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(800));
+    EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_High));
+    m_sut.runBackward(speed);
+    EXPECT_EQ(m_sut.isRunning(), true);
+    EXPECT_EQ(m_sut.getDirection(), MotorDirection::Backward);
+}
+
 

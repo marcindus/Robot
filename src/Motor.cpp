@@ -5,12 +5,6 @@ Motor::Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p
         m_directionPin(std::move(p_directionPin))
 {
 }
-/*
-Motor::Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p_directionPin, unsigned int correction) :
-                Motor(std::move(p_speedPin), std::move(p_directionPin)), m_correction(correction)
-{
-}
-*/
 
 Motor::Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p_directionPin, unsigned int correction) :
         m_speedPin(std::move(p_speedPin)),
@@ -21,7 +15,6 @@ Motor::Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p
 
 void Motor::runForward(unsigned int speed)
 {
-
     m_directionPin->write(GpioDigitalValue::GpioValue_Low);
     m_speedPin->write(speed);
     m_direction = MotorDirection::Forward;
@@ -35,6 +28,11 @@ void Motor::stop()
 
 void Motor::runBackward(unsigned int speed)
 {
+    m_directionPin->write(GpioDigitalValue::GpioValue_High);
+    m_speedPin->write(speed);
+    m_direction = MotorDirection::Backward;
+    m_isRunning = true;
+
 }
 
 bool Motor::isRunning()
