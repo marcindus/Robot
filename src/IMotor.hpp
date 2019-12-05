@@ -3,12 +3,11 @@
 
 #include "Types.hpp"
 
-class IMotor 
+class IMotor
 {
 
 public:
     virtual  ~IMotor() {};
-    virtual void runForward() = 0;
     virtual void runForward(unsigned int) = 0;
     virtual void stop() = 0;
     virtual void runBackward() = 0;

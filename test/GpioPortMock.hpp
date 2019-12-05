@@ -9,7 +9,7 @@ class GpioPortMock : public IGpioPort
     public:
         MOCK_CONST_METHOD1(write , void(GpioDigitalValue));
         MOCK_CONST_METHOD1(write, void(unsigned));
-        MOCK_CONST_METHOD0(getGpiPort, GpioPin());
+        MOCK_CONST_METHOD0(getGpioPort, GpioNodemcuV2());
         MOCK_CONST_METHOD0(getMode, GpioMode());
 
 };

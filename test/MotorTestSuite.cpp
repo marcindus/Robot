@@ -1,32 +1,38 @@
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include "GpioPortMock.hpp"
 #include "Motor.hpp"
-#include <memory>
+#include "Types.hpp"
 
 using ::testing::Return;
-using ::testing::NiceMock;
 
 
 class  MotorTestSuite : public ::testing::Test
 {
 public:
-    MotorTestSuite() : 
-        m_gpioPortMock(new GpioPortMock), 
-        m_rawGpioPtr(m_gpioPortMock.get()),
-        m_sut(std::move(m_gpioPortMock)
-    {
-    }
-    std::unique_ptr<GpioPortMock> m_gpioPortMock;
-    GpioPortMock* m_rawGpioPtr;
+    MotorTestSuite() :
+       m_gpioSpeedPortMock(new GpioPortMock),
+       m_gpioDirectionPortMock(new GpioPortMock),
+       m_rawSpeedGpioPtr(m_gpioSpeedPortMock.get()),
+       m_rawDirectionGpioPtr(m_gpioDirectionPortMock.get()),
+       m_sut(std::move(m_gpioSpeedPortMock), std::move(m_gpioDirectionPortMock), correction)
+{
+}
+
+    std::unique_ptr<GpioPortMock> m_gpioSpeedPortMock;
+    std::unique_ptr<GpioPortMock> m_gpioDirectionPortMock;
+    GpioPortMock* m_rawSpeedGpioPtr;
+    GpioPortMock* m_rawDirectionGpioPtr;
+    unsigned int correction = 200;
     Motor m_sut;
 };
 
 
 TEST_F(MotorTestSuite, whenMotorRunIsCalledThenisRunningShouldReturnTrue)
 {
-  EXPECT_CALL(*m_portRawPtr, write(GpioValue::GpioValue_High));
-  m_sut.runForward();
-  EXPECT_EQ(m_sut.isRunning(), true);
+    unsigned int  speed = 800;
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(GpioDigitalValue::GpioValue_High));
+    EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
+    m_sut.runForward(speed);
+    EXPECT_EQ(m_sut.isRunning(), true);
 }
 

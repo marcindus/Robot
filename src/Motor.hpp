@@ -10,7 +10,6 @@ class Motor : public IMotor
 public:
     Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p_directionPin);
     Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p_directionPin, unsigned int correction);
-    void runForward()  override;
     void runForward(unsigned int speed)  override;
     void stop()  override;
     void runBackward()  override;
@@ -24,6 +23,7 @@ private:
     std::unique_ptr<IGpioPort> m_directionPin;
     bool m_isRunning = false;
     unsigned int m_correction = 0;
+    MotorDirection m_direction = MotorDirection::Forward; 
 
 };
 
