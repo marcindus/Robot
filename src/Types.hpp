@@ -1,15 +1,18 @@
 #ifndef ARDUINO_TYPES_HPP
 #define ARDUINO_TYPES_HPP
 
-enum class MotorSpeed
-{
-    MaxSpeed = 1024, MinSpeed = 650
-};
 
 enum class MotorDirection
 {
     Forward = 0, Backward = 1
 };
+
+enum class MotorSpeed
+{
+    MaxSpeed = 1024, MinSpeed = 650
+};
+
+
 
 enum class GpioMode
 {
@@ -53,7 +56,6 @@ enum class GpioNodemcuV2
     GpioNodemcuV2_D9 = 3,
     GpioNodemcuV2_D10 = 1
 };
-
 
 /*
 const int PWMA=D1;    //Right side    D1 -> 5

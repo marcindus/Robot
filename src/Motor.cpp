@@ -21,13 +21,15 @@ Motor::Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p
 
 void Motor::runForward(unsigned int speed)
 {
+
+    m_directionPin->write(GpioDigitalValue::GpioValue_Low);
+    m_speedPin->write(speed);
+    m_direction = MotorDirection::Forward;
+    m_isRunning = true;
 }
+
 
 void Motor::stop()
-{
-}
-
-void Motor::runBackward()
 {
 }
 

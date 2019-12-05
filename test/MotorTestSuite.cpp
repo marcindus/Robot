@@ -30,9 +30,10 @@ public:
 TEST_F(MotorTestSuite, whenMotorRunIsCalledThenisRunningShouldReturnTrue)
 {
     unsigned int  speed = 800;
-    EXPECT_CALL(*m_rawSpeedGpioPtr, write(GpioDigitalValue::GpioValue_High));
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(800));
     EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
     m_sut.runForward(speed);
     EXPECT_EQ(m_sut.isRunning(), true);
+    EXPECT_EQ(m_sut.getDirection(), MotorDirection::Forward);
 }
 
