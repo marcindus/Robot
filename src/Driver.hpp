@@ -1,22 +1,23 @@
 #ifndef  DRIVER_HPP
 #define  DRIVER_HPP
 
+#include "IDriver.hpp"
+#include "Motor.hpp"
+#include <memory>
 
 class Driver : public IDriver 
 {
 public:
-
-     Driver(std::unique_ptr<IMotor> p_leftMotor, std::unique_ptr<IMotor> p_rightMotor,);
-
-     void forward(unsigned int speed);
-     void turnLeft();
+     Driver(Motor& p_leftMotor, Motor& p_rightMotor);
      void backward(unsigned int speed);
-     void stay();
+     void forward(unsigned int speed);
      void turnRight();
+     void turnLeft();
+     void stay();
 
 private:
-    std::unique_ptr<IMotor>  leftMotor;
-    std::unique_ptr<IMotor>  rightMotor;
-}
+    Motor&  m_leftMotor;
+    Motor&  m_rightMotor;
+};
 
 #endif // DRIVER_HPP

@@ -19,6 +19,7 @@ file(GLOB TEST_SOURCES
     "src/GpioPort.cpp"
     "src/GpioException.cpp"
     "src/Motor.cpp"
+    "src/Driver.cpp"
     )
 
 add_executable(tests ${SOURCES} ${TEST_SOURCES})

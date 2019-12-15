@@ -2,6 +2,7 @@
 #include "GpioPortMock.hpp"
 #include "Motor.hpp"
 #include "Types.hpp"
+#include "Driver.hpp"
 
 using ::testing::Return;
 
@@ -14,10 +15,12 @@ public:
        m_gpioDirectionPortMock(new GpioPortMock),
        m_rawSpeedGpioPtr(m_gpioSpeedPortMock.get()),
        m_rawDirectionGpioPtr(m_gpioDirectionPortMock.get()),
-       m_sut(std::move(m_gpioSpeedPortMock), std::move(m_gpioDirectionPortMock), correction, minSpeed)
+       m_sut(std::move(m_gpioSpeedPortMock),
+             std::move(m_gpioDirectionPortMock), 
+             correction, 
+             minSpeed)
 {
 }
-
     std::unique_ptr<GpioPortMock> m_gpioSpeedPortMock;
     std::unique_ptr<GpioPortMock> m_gpioDirectionPortMock;
     GpioPortMock* m_rawSpeedGpioPtr;
@@ -27,7 +30,6 @@ public:
     unsigned int minSpeed = 600;
     Motor m_sut;
 };
-
 
 TEST_F(MotorTestSuite, motorRunsForward)
 {
