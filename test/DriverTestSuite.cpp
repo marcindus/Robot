@@ -3,6 +3,7 @@
 #include "Motor.hpp"
 #include "Types.hpp"
 #include "Driver.hpp"
+#include <memory>
 
 using ::testing::Return;
 
@@ -19,7 +20,6 @@ public:
        m_A_rawDirectionGpioPtr(m_A_gpioDirectionPortMock.get()),
        m_B_rawSpeedGpioPtr(m_B_gpioSpeedPortMock.get()),
        m_B_rawDirectionGpioPtr(m_B_gpioDirectionPortMock.get()),
-       m_leftMotor(std::move(m_A_gpioSpeedPortMock), 
        m_leftMotor(std::move(m_A_gpioSpeedPortMock),
                    std::move(m_A_gpioDirectionPortMock),
                    correction,
@@ -60,3 +60,4 @@ TEST_F(DriverTestSuite, driverRunsForward)
     EXPECT_EQ(m_rightMotor.getDirection(), MotorDirection::Forward);
     EXPECT_EQ(m_leftMotor.getDirection(), MotorDirection::Forward);
 }
+

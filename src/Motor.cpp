@@ -3,8 +3,7 @@
 Motor::Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p_directionPin) :
         m_speedPin(std::move(p_speedPin)),
         m_directionPin(std::move(p_directionPin))
-{
-}
+{}
 
 Motor::Motor(std::unique_ptr<IGpioPort> p_speedPin,
              std::unique_ptr<IGpioPort> p_directionPin,

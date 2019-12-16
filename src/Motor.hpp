@@ -9,7 +9,6 @@ class Motor : public IMotor
 {
 public:
     Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p_directionPin);
-
     Motor(std::unique_ptr<IGpioPort> p_speedPin,
           std::unique_ptr<IGpioPort> p_directionPin,
           unsigned int correction,
