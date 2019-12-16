@@ -22,7 +22,7 @@ void  respond(WiFiClient* client )
 }
 
 void setup()
-{ 
+{
     Serial.begin(57600); 
 
     pinMode(PWMA, OUTPUT); 
@@ -44,25 +44,25 @@ void setup()
     Serial.print(WiFi.localIP());
     Serial.println("/");
 
-} 
- 
- 
+}
+
+
 void loop() {
   WiFiClient client = server.available();
 
-  if (!client) { return; } 
+  if (!client) { return; }
 
   WiFiClient* ptr_client = &client;
 
   Serial.println("new client");
   while(!client.available()){ delay(1); }
- 
+
   // Read the first line of the request
   String request = client.readStringUntil('\r');
   Serial.println(request);
   client.flush();
- 
- 
+
+
   if (request.indexOf("/RIGHT") != -1)  { right_turn(); }
   if (request.indexOf("/LEFT") != -1)  { left_turn(); }
   if (request.indexOf("/FORWARD") != -1)  { forward(); }
@@ -73,5 +73,5 @@ void loop() {
 
     delay(1); Serial.println("Client disonnected"); Serial.println("");
 }
- 
- 
+
+
