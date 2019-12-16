@@ -5,7 +5,7 @@
 #include "Motor.hpp"
 #include <memory>
 
-class Driver : public IDriver 
+class Driver : public IDriver
 {
 public:
      Driver(Motor& p_leftMotor, Motor& p_rightMotor);

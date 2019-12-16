@@ -15,9 +15,9 @@ public:
        m_A_gpioDirectionPortMock(new GpioPortMock),
        m_B_gpioSpeedPortMock(new GpioPortMock),
        m_B_gpioDirectionPortMock(new GpioPortMock),
-       m_leftMotor(std::move(m_A_gpioSpeedPortMock), 
+       m_leftMotor(std::move(m_A_gpioSpeedPortMock),
                    std::move(m_A_gpioDirectionPortMock),
-                   correction, 
+                   correction,
                    minSpeed),
        m_rightMotor(std::move(m_B_gpioSpeedPortMock),
                     std::move(m_B_gpioDirectionPortMock),
@@ -27,16 +27,13 @@ public:
 }
     std::unique_ptr<GpioPortMock> m_A_gpioSpeedPortMock;
     std::unique_ptr<GpioPortMock> m_A_gpioDirectionPortMock;
-
     std::unique_ptr<GpioPortMock> m_B_gpioSpeedPortMock;
     std::unique_ptr<GpioPortMock> m_B_gpioDirectionPortMock;
-
     unsigned int correction = 200;
     unsigned int  speed = 800;
     unsigned int minSpeed = 600;
     Motor m_leftMotor;
     Motor m_rightMotor;
-
     Driver m_sut_driver;
 };
 
@@ -48,7 +45,6 @@ EXPECT_EQ(m_rightMotor.isRunning(), true);
 EXPECT_EQ(m_leftMotor.isRunning(), true);
 EXPECT_EQ(m_rightMotor.getDirection(), MotorDirection::Forward);
 EXPECT_EQ(m_leftMotor.getDirection(), MotorDirection::Forward);
-
 
 //exception should be trown when speed lowerr than lowest acceptable speed)
 
