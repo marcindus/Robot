@@ -16,8 +16,8 @@ public:
        m_rawSpeedGpioPtr(m_gpioSpeedPortMock.get()),
        m_rawDirectionGpioPtr(m_gpioDirectionPortMock.get()),
        m_sut(std::move(m_gpioSpeedPortMock),
-             std::move(m_gpioDirectionPortMock), 
-             correction, 
+             std::move(m_gpioDirectionPortMock),
+             correction,
              minSpeed)
 {
 }
@@ -28,26 +28,37 @@ public:
     unsigned int correction = 200;
     unsigned int  speed = 800;
     unsigned int minSpeed = 600;
+    unsigned int lowerThancorrection = 100;
     Motor m_sut;
 };
 
-TEST_F(MotorTestSuite, motorRunsForward)
+TEST_F(MotorTestSuite, motorRunsForwardWithCorrectedSpeed)
 {
-    EXPECT_CALL(*m_rawSpeedGpioPtr, write(speed));
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(speed-correction));
     EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
     m_sut.runForward(speed);
     EXPECT_EQ(m_sut.isRunning(), true);
     EXPECT_EQ(m_sut.getDirection(), MotorDirection::Forward);
 }
 
-TEST_F(MotorTestSuite, motorRunsBackward)
+TEST_F(MotorTestSuite, motorRunsBackwardCorrectedSpeed)
 {
-    EXPECT_CALL(*m_rawSpeedGpioPtr, write(speed));
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(speed-correction));
     EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_High));
     m_sut.runBackward(speed);
     EXPECT_EQ(m_sut.isRunning(), true);
     EXPECT_EQ(m_sut.getDirection(), MotorDirection::Backward);
 }
+
+TEST_F(MotorTestSuite, motorRunsBackwardWithMinimalSpeed)
+{
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(minSpeed));
+    EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_High));
+    m_sut.runBackward(lowerThancorrection);
+    EXPECT_EQ(m_sut.isRunning(), true);
+    EXPECT_EQ(m_sut.getDirection(), MotorDirection::Backward);
+}
+
 
 
 TEST_F(MotorTestSuite, motorStop)

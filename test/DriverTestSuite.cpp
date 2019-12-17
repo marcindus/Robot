@@ -49,8 +49,8 @@ public:
 
 TEST_F(DriverTestSuite, driverRunsForward)
 {
-    EXPECT_CALL(*m_A_rawSpeedGpioPtr, write(speed));
-    EXPECT_CALL(*m_B_rawSpeedGpioPtr, write(speed));
+    EXPECT_CALL(*m_A_rawSpeedGpioPtr, write(speed-correction));
+    EXPECT_CALL(*m_B_rawSpeedGpioPtr, write(speed-correction));
     EXPECT_CALL(*m_A_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
     EXPECT_CALL(*m_B_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
 
