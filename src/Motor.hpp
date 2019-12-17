@@ -11,13 +11,14 @@ public:
     Motor(std::unique_ptr<IGpioPort> p_speedPin, std::unique_ptr<IGpioPort> p_directionPin);
     Motor(std::unique_ptr<IGpioPort> p_speedPin,
           std::unique_ptr<IGpioPort> p_directionPin,
-          unsigned int correction,
-          unsigned int m_minSpeed);
+          int correction,
+          int m_minSpeed,
+          int m_maxSpeed);
 
-    void runForward(unsigned int speed)  override;
+    void runForward(int speed)  override;
     void runForwardSlowly() override;
     void stop()  override;
-    void runBackward(unsigned int speed)  override;
+    void runBackward(int speed)  override;
     void runBackwardSlowly()  override;
     bool isRunning()  override;
     MotorDirection getDirection() override;
@@ -28,9 +29,11 @@ private:
     std::unique_ptr<IGpioPort> m_speedPin;
     std::unique_ptr<IGpioPort> m_directionPin;
     bool m_isRunning = false;
-    unsigned int m_correction = 0;
+    int m_correction = 0;
     MotorDirection m_direction = MotorDirection::Forward;
-    unsigned int m_minSpeed = 600;
+    int m_minSpeed = 600;
+    int m_maxSpeed = 1024;
+    void setSpeed(int speed);
 
 };
 

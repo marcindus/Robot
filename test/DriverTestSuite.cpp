@@ -23,10 +23,11 @@ public:
        m_leftMotor(std::move(m_A_gpioSpeedPortMock),
                    std::move(m_A_gpioDirectionPortMock),
                    correction,
-                   minSpeed),
+                   minSpeed,
+                   maxSpeed),
        m_rightMotor(std::move(m_B_gpioSpeedPortMock),
                     std::move(m_B_gpioDirectionPortMock),
-                    correction, minSpeed),
+                    correction, minSpeed, maxSpeed),
        m_sut_driver(m_leftMotor, m_rightMotor)
 {
 }
@@ -38,9 +39,10 @@ public:
     GpioPortMock* m_A_rawDirectionGpioPtr;
     GpioPortMock* m_B_rawSpeedGpioPtr;
     GpioPortMock* m_B_rawDirectionGpioPtr;
-    unsigned int correction = 200;
-    unsigned int  speed = 800;
-    unsigned int minSpeed = 600;
+    int correction = 200;
+    int  speed = 800;
+    int minSpeed = 600;
+    int maxSpeed = 1024;
     Motor m_leftMotor;
     Motor m_rightMotor;
     Driver m_sut_driver;

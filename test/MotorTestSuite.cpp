@@ -18,17 +18,19 @@ public:
        m_sut(std::move(m_gpioSpeedPortMock),
              std::move(m_gpioDirectionPortMock),
              correction,
-             minSpeed)
+             minSpeed,
+             maxSpeed)
 {
 }
     std::unique_ptr<GpioPortMock> m_gpioSpeedPortMock;
     std::unique_ptr<GpioPortMock> m_gpioDirectionPortMock;
     GpioPortMock* m_rawSpeedGpioPtr;
     GpioPortMock* m_rawDirectionGpioPtr;
-    unsigned int correction = 200;
-    unsigned int  speed = 800;
-    unsigned int minSpeed = 600;
-    unsigned int lowerThancorrection = 100;
+    int correction = 200;
+    int  speed = 800;
+    int minSpeed = 600;
+    int maxSpeed = 1024;
+    int lowerThancorrection = 100;
     Motor m_sut;
 };
 
@@ -59,7 +61,23 @@ TEST_F(MotorTestSuite, motorRunsBackwardWithMinimalSpeed)
     EXPECT_EQ(m_sut.getDirection(), MotorDirection::Backward);
 }
 
+TEST_F(MotorTestSuite, toHighBackwardSpeed)
+{
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(maxSpeed));
+    EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_High));
+    m_sut.runBackward(999999);
+    EXPECT_EQ(m_sut.isRunning(), true);
+    EXPECT_EQ(m_sut.getDirection(), MotorDirection::Backward);
+}
 
+TEST_F(MotorTestSuite, toHighForwardSpeed)
+{
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(maxSpeed));
+    EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
+    m_sut.runForward(999999);
+    EXPECT_EQ(m_sut.isRunning(), true);
+    EXPECT_EQ(m_sut.getDirection(), MotorDirection::Forward);
+}
 
 TEST_F(MotorTestSuite, motorStop)
 {

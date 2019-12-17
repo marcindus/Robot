@@ -1,5 +1,6 @@
 #include "GpioPort.hpp"
 #include "GpioException.hpp"
+#include <iostream>
 
 GpioPort::GpioPort(IArduinoWrapper& p_arduinoWrapper, GpioNodemcuV2 p_pin, GpioMode p_mode) :
     m_arduinoWrapper(p_arduinoWrapper),
@@ -28,6 +29,7 @@ void GpioPort::write(GpioDigitalValue p_value) const
 
 void GpioPort::write(unsigned int p_signal) const
 {
+    std::cout << "signal : " << p_signal << std::endl;
     if(m_gpioMode != GpioMode::GpioMode_Pwm)
     {
         throw GpioException("Port is not PWM", m_gpioPin, m_gpioMode);
@@ -39,7 +41,6 @@ void GpioPort::write(unsigned int p_signal) const
 GpioNodemcuV2  GpioPort::getGpioPort() const
 {
     return m_gpioPin;
-
 }
 
 GpioMode  GpioPort::getMode() const
