@@ -11,20 +11,20 @@ https://www.instructables.com/id/WiFi-Car-Using-NodeMCU/
 
 # Building tests
 
-mkdir build
+mkdir build   
 
-cd build
+cd build  
 
-cmake ../../../<path to CMakeList.txt>
+cmake ../../../<path to CMakeList.txt>   
 
-make
+make  
 
-./tests
+./tests  
 
 # Building with platformio (and upload)
 
-pio run
+pio runA  
 
-pio run -t upload
+pio run -t upload  
 
 
