@@ -1,6 +1,6 @@
 #include "Robot.hpp"
 
-Robot::Robot(Driver& p_driver) : m_driver(p_driver) {} 
+Robot::Robot(Driver& p_driver) : m_driver(p_driver) {}
 
 
 void Robot::goBackward(unsigned int speed)

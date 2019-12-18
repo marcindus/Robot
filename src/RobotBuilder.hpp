@@ -4,22 +4,43 @@
 class RobotBuilder
 {
 public:
-    RobotBuilder(IArduinoWrapper& arduinoWrapper);
-    RobotBuilder& set_sth()
+    RobotBuilder();
+    RobotBuilder(IArduinoWrapper& nodemcuWrapper) :
+        nodemcu(nodemcuWrapper),
+        pin_A_speed(new GpioPort(nodemcu, GpioNodemcuV2::GpioNodemcuV2_D1, GpioMode::GpioMode_Pwm)),
+        pin_A_direction(new GpioPort(nodemcu, GpioNodemcuV2::GpioNodemcuV2_D3, GpioMode::GpioMode_Output)),
+        pin_B_speed(new GpioPort(nodemcu, GpioNodemcuV2::GpioNodemcuV2_D2, GpioMode::GpioMode_Pwm)),
+        pin_B_direction(new GpioPort(nodemcu, GpioNodemcuV2::GpioNodemcuV2_D4, GpioMode::GpioMode_Output)),
+        motor_A(std::move(pin_A_speed), std::move(pin_A_direction), motor_A_correction, motor_A_minSpeed, motor_A_maxSpeed),
+        motor_B(std::move(pin_B_speed), std::move(pin_B_direction), motor_B_correction, motor_B_minSpeed, motor_B_maxSpeed),
+        m_driver(motor_A,motor_B)
+    {}
+
+    RobotBuilder& setMaxSpeedA(int speed)
     {
         return *this;
     }
 
     Robot build()
     {
-
-        GpioPort motor_A_speed( GpioPort(IArduinoWrapper& p_arduinoWrapper,  GpioNodemcuV2 p_pin, GpioMode p_mode);
-
-
-        return Robot();
+        return Robot(m_driver);
     }
 
 private:
-    ///std::unique_ptr<IMotor> m_motor;
+
+    IArduinoWrapper& nodemcu;
+    std::unique_ptr<GpioPort> pin_A_speed;
+    std::unique_ptr<GpioPort> pin_A_direction;
+    std::unique_ptr<GpioPort> pin_B_speed;
+    std::unique_ptr<GpioPort> pin_B_direction;
+    int motor_A_minSpeed = 0;
+    int motor_A_maxSpeed = 0;
+    int motor_A_correction = 0;
+    int motor_B_minSpeed = 0;
+    int motor_B_maxSpeed = 0;
+    int motor_B_correction = 0;
+    Motor motor_A;
+    Motor motor_B;
+    Driver m_driver;
 
 };
