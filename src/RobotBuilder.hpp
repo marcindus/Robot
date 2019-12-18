@@ -16,14 +16,10 @@ public:
         m_driver(motor_A,motor_B)
     {}
 
-    RobotBuilder& setMaxSpeedA(int speed)
-    {
-        return *this;
-    }
 
-    Robot build()
+std::unique_ptr<Robot> build()
     {
-        return Robot(m_driver);
+        return std::unique_ptr<Robot>(new Robot(m_driver)); 
     }
 
 private:

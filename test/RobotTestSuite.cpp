@@ -18,11 +18,11 @@ public:
 
     ArduinoWrapperMock wrapperMock;
     RobotBuilder builder;
-    Robot m_sut;
+    std::unique_ptr<Robot> m_sut;
 };
 
 TEST_F(RobotBuilderTestSuite, sanity)
 {
-    m_sut.goForward(500);
+    m_sut->goForward(500);
 }
 

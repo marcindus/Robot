@@ -1,9 +1,12 @@
 #include "../.cfg/wifi_credentials.h"
 #include <ESP8266WiFi.h> 
-#include "move.h"
-#include "ultrasonic.h"
+#include "ArduinoWrapper.hpp"
+#include "RobotBuilder.hpp"
 
 WiFiServer server(80);
+ArduinoWrapper nodemcuWrapper;
+RobotBuilder builder(nodemcuWrapper);
+std::unique_ptr<Robot> robot_ptr = nullptr;
 
 void  respond(WiFiClient* client ) 
 {
@@ -23,12 +26,9 @@ void  respond(WiFiClient* client )
 
 void setup()
 {
+    robot_ptr = builder.build();    
     Serial.begin(57600); 
 
-    pinMode(PWMA, OUTPUT); 
-    pinMode(PWMB, OUTPUT); 
-    pinMode(DA, OUTPUT); 
-    pinMode(DB, OUTPUT); 
     delay(10);
 
     Serial.println(); Serial.println(); Serial.print("Connecting to "); Serial.println(ssid);
@@ -63,11 +63,11 @@ void loop() {
   client.flush();
 
 
-  if (request.indexOf("/RIGHT") != -1)  { right_turn(); }
-  if (request.indexOf("/LEFT") != -1)  { left_turn(); }
-  if (request.indexOf("/FORWARD") != -1)  { forward(); }
-  if (request.indexOf("/BACKWARD") != -1)  { backward();  }
-  if (request.indexOf("/STOP") != -1)  { stay();  }
+  if (request.indexOf("/RIGHT") != -1)  { robot_ptr->turnRight(); }
+  if (request.indexOf("/LEFT") != -1)  { robot_ptr->turnLeft(); }
+  if (request.indexOf("/FORWARD") != -1)  { robot_ptr->goForward(800); }
+  if (request.indexOf("/BACKWARD") != -1)  { robot_ptr->goBackward(800);  }
+  if (request.indexOf("/STOP") != -1)  { robot_ptr->stay();  }
 
     respond(ptr_client);
 
