@@ -1,5 +1,4 @@
-#ifndef ARDUINOWRAPPER_HPP
-#define ARDUINOWRAPPER_HPP
+#pragma once
 
 #include "IArduinoWrapper.hpp"
 
@@ -11,4 +10,3 @@ class ArduinoWrapper : public IArduinoWrapper
         void _digitalWrite(GpioNodemcuV2 p_pin, GpioDigitalValue p_value) const override;
 };
 
-#endif  // ARDUINOWRAPPER_HPP

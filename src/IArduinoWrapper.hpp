@@ -1,5 +1,4 @@
-#ifndef IARDUINOWRAPPER_HPP
-#define IARDUINOWRAPPER_HPP
+#pragma once
 
 #include "Types.hpp"
 
@@ -12,4 +11,3 @@ public:
     virtual void _digitalWrite(GpioNodemcuV2 p_pin, GpioDigitalValue p_value)const = 0;
 };
 
-#endif // IARDUINOWRAPPER_HPP

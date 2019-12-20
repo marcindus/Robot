@@ -1,11 +1,9 @@
-#ifndef IMOTOR_HPP
-#define IMOTOR_HPP
+#pragma once
 
 #include "Types.hpp"
 
 class IMotor
 {
-
 public:
     virtual  ~IMotor() {};
     virtual void runForward(int speed) = 0;
@@ -19,4 +17,3 @@ public:
     virtual unsigned int getMinimalSpeed() = 0;
 };
 
-#endif // IMOTOR_HPP

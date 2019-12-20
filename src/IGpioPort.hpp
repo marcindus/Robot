@@ -1,5 +1,4 @@
-#ifndef IGPIOPORT_HPP
-#define IGPIOPORT_HPP
+#pragma once
 
 #include "Types.hpp"
 
@@ -13,5 +12,3 @@ public:
     virtual GpioMode getMode() const = 0;
 };
 
-
-#endif // IGPIOPORT_HPP

@@ -1,5 +1,4 @@
-#ifndef  DRIVER_HPP
-#define  DRIVER_HPP
+#pragma once
 
 #include "IDriver.hpp"
 #include "Motor.hpp"
@@ -20,4 +19,3 @@ private:
     Motor&  m_rightMotor;
 };
 
-#endif // DRIVER_HPP

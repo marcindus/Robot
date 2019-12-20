@@ -1,6 +1,4 @@
-#ifndef ARDUINO_TYPES_HPP
-#define ARDUINO_TYPES_HPP
-
+#pragma once
 
 enum class MotorDirection
 {
@@ -33,7 +31,6 @@ enum class GpioPin
     GpioPin_9 = 9,
     GpioPin_10 = 10
 };
-
 
 enum class GpioNodemcuV2
 {
@@ -94,4 +91,4 @@ enum class L298nDirection
     L298nDirectionPortB = D4
 };
 */
-#endif // ARDUINO_TYPES_HPP
+
