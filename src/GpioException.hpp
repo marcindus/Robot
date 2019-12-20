@@ -14,4 +14,3 @@ private:
     GpioNodemcuV2 m_pin;
     GpioMode m_mode;
 };
-

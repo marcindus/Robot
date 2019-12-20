@@ -33,6 +33,4 @@ private:
     int m_minSpeed = 600;
     int m_maxSpeed = 1024;
     void setSpeed(int speed);
-
 };
-

@@ -2,7 +2,8 @@
 
 enum class MotorDirection
 {
-    Forward = 0, Backward = 1
+    Forward = 0,
+    Backward = 1
 };
 
 enum class GpioMode
@@ -75,9 +76,6 @@ const int DA=D3;      //Right reverse   D3 -> 0
 const int DB=D4;      //Left reverse    D4 -> 2
 */
 
-
-
-
 /*
 enum class L298nSpeed
 {
@@ -91,4 +89,3 @@ enum class L298nDirection
     L298nDirectionPortB = D4
 };
 */
-

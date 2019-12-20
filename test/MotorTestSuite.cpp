@@ -6,28 +6,23 @@
 
 using ::testing::Return;
 
-
-class  MotorTestSuite : public ::testing::Test
+class MotorTestSuite : public ::testing::Test
 {
 public:
-    MotorTestSuite() :
-       m_gpioSpeedPortMock(new GpioPortMock),
-       m_gpioDirectionPortMock(new GpioPortMock),
-       m_rawSpeedGpioPtr(m_gpioSpeedPortMock.get()),
-       m_rawDirectionGpioPtr(m_gpioDirectionPortMock.get()),
-       m_sut(std::move(m_gpioSpeedPortMock),
-             std::move(m_gpioDirectionPortMock),
-             correction,
-             minSpeed,
-             maxSpeed)
-{
-}
+    MotorTestSuite()
+        : m_gpioSpeedPortMock(new GpioPortMock),
+          m_gpioDirectionPortMock(new GpioPortMock),
+          m_rawSpeedGpioPtr(m_gpioSpeedPortMock.get()),
+          m_rawDirectionGpioPtr(m_gpioDirectionPortMock.get()),
+          m_sut(std::move(m_gpioSpeedPortMock), std::move(m_gpioDirectionPortMock), correction, minSpeed, maxSpeed)
+    {
+    }
     std::unique_ptr<GpioPortMock> m_gpioSpeedPortMock;
     std::unique_ptr<GpioPortMock> m_gpioDirectionPortMock;
     GpioPortMock* m_rawSpeedGpioPtr;
     GpioPortMock* m_rawDirectionGpioPtr;
     int correction = 200;
-    int  speed = 800;
+    int speed = 800;
     int minSpeed = 600;
     int maxSpeed = 1024;
     int lowerThancorrection = 100;
@@ -36,7 +31,7 @@ public:
 
 TEST_F(MotorTestSuite, motorRunsForwardWithCorrectedSpeed)
 {
-    EXPECT_CALL(*m_rawSpeedGpioPtr, write(speed-correction));
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(speed - correction));
     EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
     m_sut.runForward(speed);
     EXPECT_EQ(m_sut.isRunning(), true);
@@ -45,7 +40,7 @@ TEST_F(MotorTestSuite, motorRunsForwardWithCorrectedSpeed)
 
 TEST_F(MotorTestSuite, motorRunsBackwardCorrectedSpeed)
 {
-    EXPECT_CALL(*m_rawSpeedGpioPtr, write(speed-correction));
+    EXPECT_CALL(*m_rawSpeedGpioPtr, write(speed - correction));
     EXPECT_CALL(*m_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_High));
     m_sut.runBackward(speed);
     EXPECT_EQ(m_sut.isRunning(), true);
@@ -86,4 +81,3 @@ TEST_F(MotorTestSuite, motorStop)
     EXPECT_EQ(m_sut.isRunning(), false);
     EXPECT_EQ(m_sut.getDirection(), MotorDirection::Forward);
 }
-

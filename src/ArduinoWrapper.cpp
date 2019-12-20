@@ -13,7 +13,5 @@ void ArduinoWrapper::_analogWrite(GpioNodemcuV2 p_pin, unsigned int p_signal) co
 
 void ArduinoWrapper::_digitalWrite(GpioNodemcuV2 p_pin, GpioDigitalValue p_value) const
 {
-    digitalWrite(static_cast<unsigned>(p_pin),
-                   static_cast<unsigned>(p_value));
+    digitalWrite(static_cast<unsigned>(p_pin), static_cast<unsigned>(p_value));
 };
-
