@@ -20,6 +20,7 @@ file(GLOB TEST_SOURCES
     "src/Motor.cpp"
     "src/Driver.cpp"
     "src/Robot.cpp"
+    "src/Types.cpp"
     )
 
 add_executable(tests ${SOURCES} ${TEST_SOURCES})

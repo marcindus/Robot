@@ -1,10 +1,13 @@
 #pragma once
+#include <iosfwd>
 
 enum class MotorDirection
 {
     Forward = 0,
     Backward = 1
 };
+
+std::ostream& operator << (std::ostream&, MotorDirection);
 
 enum class GpioMode
 {
@@ -13,11 +16,15 @@ enum class GpioMode
     GpioMode_Pwm = 2
 };
 
+std::ostream& operator << (std::ostream&, GpioMode);
+
 enum class GpioDigitalValue
 {
     GpioValue_Low = 0,
     GpioValue_High = 1
 };
+
+std::ostream& operator << (std::ostream&, GpioDigitalValue);
 
 enum class GpioPin
 {
@@ -33,6 +40,8 @@ enum class GpioPin
     GpioPin_10 = 10
 };
 
+std::ostream& operator << (std::ostream&, GpioPin);
+
 enum class GpioNodemcuV2
 {
     GpioNodemcuV2_D0 = 16,
@@ -47,6 +56,8 @@ enum class GpioNodemcuV2
     GpioNodemcuV2_D9 = 3,
     GpioNodemcuV2_D10 = 1
 };
+
+std::ostream& operator << (std::ostream&, GpioNodemcuV2);
 
 /*
 const int PWMA=D1;    //Right side    D1 -> 5
