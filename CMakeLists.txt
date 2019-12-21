@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(robot_test)
 
 set(CMAKE_CXX_STANDARD 14)
-#add_compile_options(-Wall -Wextra -pedantic -Werror)
-add_compile_options(-Wall  -Werror)
+add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 include(cmake/GTest.cmake)
 
@@ -21,6 +20,7 @@ file(GLOB TEST_SOURCES
     "src/Motor.cpp"
     "src/Driver.cpp"
     "src/Robot.cpp"
+    "src/Types.cpp"
     )
 
 add_executable(tests ${SOURCES} ${TEST_SOURCES})

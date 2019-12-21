@@ -1,5 +1,4 @@
-#ifndef MOTOR_HPP
-#define MOTOR_HPP
+#pragma once
 
 #include "IMotor.hpp"
 #include "GpioPort.hpp"
@@ -15,12 +14,12 @@ public:
           int m_minSpeed,
           int m_maxSpeed);
 
-    void runForward(int speed)  override;
+    void runForward(int speed) override;
     void runForwardSlowly() override;
-    void stop()  override;
-    void runBackward(int speed)  override;
-    void runBackwardSlowly()  override;
-    bool isRunning()  override;
+    void stop() override;
+    void runBackward(int speed) override;
+    void runBackwardSlowly() override;
+    bool isRunning() override;
     MotorDirection getDirection() override;
     unsigned int getCorrection() override;
     unsigned int getMinimalSpeed() override;
@@ -34,7 +33,4 @@ private:
     int m_minSpeed = 600;
     int m_maxSpeed = 1024;
     void setSpeed(int speed);
-
 };
-
-#endif // MOTOR_HPP

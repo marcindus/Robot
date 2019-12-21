@@ -1,10 +1,9 @@
 #include "Driver.hpp"
 #include <iostream>
 
-Driver::Driver(Motor& p_leftMotor, Motor& p_rightMotor) :
-    m_leftMotor(p_leftMotor),
-    m_rightMotor(p_rightMotor)
-{}
+Driver::Driver(Motor& p_leftMotor, Motor& p_rightMotor) : m_leftMotor(p_leftMotor), m_rightMotor(p_rightMotor)
+{
+}
 
 void Driver::backward(unsigned int speed)
 {
@@ -13,7 +12,7 @@ void Driver::backward(unsigned int speed)
 }
 void Driver::forward(unsigned int speed)
 {
-    
+
     m_leftMotor.runForward(speed);
     m_rightMotor.runForward(speed);
 }
@@ -32,4 +31,3 @@ void Driver::stay()
     m_leftMotor.stop();
     m_rightMotor.stop();
 }
-

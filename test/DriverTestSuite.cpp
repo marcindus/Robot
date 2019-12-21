@@ -7,30 +7,31 @@
 
 using ::testing::Return;
 
-
-class  DriverTestSuite : public ::testing::Test
+class DriverTestSuite : public ::testing::Test
 {
 public:
-    DriverTestSuite() :
-       m_A_gpioSpeedPortMock(new GpioPortMock),
-       m_A_gpioDirectionPortMock(new GpioPortMock),
-       m_B_gpioSpeedPortMock(new GpioPortMock),
-       m_B_gpioDirectionPortMock(new GpioPortMock),
-       m_A_rawSpeedGpioPtr(m_A_gpioSpeedPortMock.get()),
-       m_A_rawDirectionGpioPtr(m_A_gpioDirectionPortMock.get()),
-       m_B_rawSpeedGpioPtr(m_B_gpioSpeedPortMock.get()),
-       m_B_rawDirectionGpioPtr(m_B_gpioDirectionPortMock.get()),
-       m_leftMotor(std::move(m_A_gpioSpeedPortMock),
-                   std::move(m_A_gpioDirectionPortMock),
-                   correction,
-                   minSpeed,
-                   maxSpeed),
-       m_rightMotor(std::move(m_B_gpioSpeedPortMock),
-                    std::move(m_B_gpioDirectionPortMock),
-                    correction, minSpeed, maxSpeed),
-       m_sut_driver(m_leftMotor, m_rightMotor)
-{
-}
+    DriverTestSuite()
+        : m_A_gpioSpeedPortMock(new GpioPortMock),
+          m_A_gpioDirectionPortMock(new GpioPortMock),
+          m_B_gpioSpeedPortMock(new GpioPortMock),
+          m_B_gpioDirectionPortMock(new GpioPortMock),
+          m_A_rawSpeedGpioPtr(m_A_gpioSpeedPortMock.get()),
+          m_A_rawDirectionGpioPtr(m_A_gpioDirectionPortMock.get()),
+          m_B_rawSpeedGpioPtr(m_B_gpioSpeedPortMock.get()),
+          m_B_rawDirectionGpioPtr(m_B_gpioDirectionPortMock.get()),
+          m_leftMotor(std::move(m_A_gpioSpeedPortMock),
+                      std::move(m_A_gpioDirectionPortMock),
+                      correction,
+                      minSpeed,
+                      maxSpeed),
+          m_rightMotor(std::move(m_B_gpioSpeedPortMock),
+                       std::move(m_B_gpioDirectionPortMock),
+                       correction,
+                       minSpeed,
+                       maxSpeed),
+          m_sut_driver(m_leftMotor, m_rightMotor)
+    {
+    }
     std::unique_ptr<GpioPortMock> m_A_gpioSpeedPortMock;
     std::unique_ptr<GpioPortMock> m_A_gpioDirectionPortMock;
     std::unique_ptr<GpioPortMock> m_B_gpioSpeedPortMock;
@@ -40,7 +41,7 @@ public:
     GpioPortMock* m_B_rawSpeedGpioPtr;
     GpioPortMock* m_B_rawDirectionGpioPtr;
     int correction = 200;
-    int  speed = 800;
+    int speed = 800;
     int minSpeed = 600;
     int maxSpeed = 1024;
     Motor m_leftMotor;
@@ -48,11 +49,10 @@ public:
     Driver m_sut_driver;
 };
 
-
 TEST_F(DriverTestSuite, driverRunsForward)
 {
-    EXPECT_CALL(*m_A_rawSpeedGpioPtr, write(speed-correction));
-    EXPECT_CALL(*m_B_rawSpeedGpioPtr, write(speed-correction));
+    EXPECT_CALL(*m_A_rawSpeedGpioPtr, write(speed - correction));
+    EXPECT_CALL(*m_B_rawSpeedGpioPtr, write(speed - correction));
     EXPECT_CALL(*m_A_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
     EXPECT_CALL(*m_B_rawDirectionGpioPtr, write(GpioDigitalValue::GpioValue_Low));
 
@@ -62,4 +62,3 @@ TEST_F(DriverTestSuite, driverRunsForward)
     EXPECT_EQ(m_rightMotor.getDirection(), MotorDirection::Forward);
     EXPECT_EQ(m_leftMotor.getDirection(), MotorDirection::Forward);
 }
-

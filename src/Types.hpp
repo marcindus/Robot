@@ -1,11 +1,13 @@
-#ifndef ARDUINO_TYPES_HPP
-#define ARDUINO_TYPES_HPP
-
+#pragma once
+#include <iosfwd>
 
 enum class MotorDirection
 {
-    Forward = 0, Backward = 1
+    Forward = 0,
+    Backward = 1
 };
+
+std::ostream& operator << (std::ostream&, MotorDirection);
 
 enum class GpioMode
 {
@@ -14,11 +16,15 @@ enum class GpioMode
     GpioMode_Pwm = 2
 };
 
+std::ostream& operator << (std::ostream&, GpioMode);
+
 enum class GpioDigitalValue
 {
     GpioValue_Low = 0,
     GpioValue_High = 1
 };
+
+std::ostream& operator << (std::ostream&, GpioDigitalValue);
 
 enum class GpioPin
 {
@@ -34,6 +40,7 @@ enum class GpioPin
     GpioPin_10 = 10
 };
 
+std::ostream& operator << (std::ostream&, GpioPin);
 
 enum class GpioNodemcuV2
 {
@@ -50,6 +57,8 @@ enum class GpioNodemcuV2
     GpioNodemcuV2_D10 = 1
 };
 
+std::ostream& operator << (std::ostream&, GpioNodemcuV2);
+
 /*
 const int PWMA=D1;    //Right side    D1 -> 5
 const int PWMB=D2;    //Left side     D2 -> 4
@@ -78,9 +87,6 @@ const int DA=D3;      //Right reverse   D3 -> 0
 const int DB=D4;      //Left reverse    D4 -> 2
 */
 
-
-
-
 /*
 enum class L298nSpeed
 {
@@ -94,4 +100,3 @@ enum class L298nDirection
     L298nDirectionPortB = D4
 };
 */
-#endif // ARDUINO_TYPES_HPP
