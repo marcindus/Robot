@@ -33,11 +33,11 @@ private:
     std::unique_ptr<GpioPort> pin_A_direction;
     std::unique_ptr<GpioPort> pin_B_speed;
     std::unique_ptr<GpioPort> pin_B_direction;
-    int motor_A_minSpeed = 0;
-    int motor_A_maxSpeed = 0;
+    int motor_A_minSpeed = 600;
+    int motor_A_maxSpeed = 1024;
     int motor_A_correction = 0;
-    int motor_B_minSpeed = 0;
-    int motor_B_maxSpeed = 0;
+    int motor_B_minSpeed = 600;
+    int motor_B_maxSpeed = 1024;
     int motor_B_correction = 0;
     Motor motor_A;
     Motor motor_B;

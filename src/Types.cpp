@@ -47,7 +47,7 @@ std::ostream& operator<<(std::ostream& os, GpioPin value)
 
 std::ostream& operator<<(std::ostream& os, GpioNodemcuV2 value)
 {
-    os << "Pin:";
+    os << "Pin::";
     switch (value)
     {
         case GpioNodemcuV2::GpioNodemcuV2_D0:
