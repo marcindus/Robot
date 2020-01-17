@@ -24,7 +24,6 @@ void GpioPort::write(GpioDigitalValue p_value) const
 
 void GpioPort::write(unsigned int p_signal) const
 {
-    std::cout << "signal : " << p_signal << std::endl;
     if (m_gpioMode != GpioMode::GpioMode_Pwm)
     {
         throw GpioException("Port is not PWM", m_gpioPin, m_gpioMode);

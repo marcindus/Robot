@@ -7,36 +7,30 @@
 #include "Types.hpp"
 #include "GpioPort.hpp"
 
-using ::testing::NiceMock;
-using ::testing::Return;
-using ::testing::StrictMock;
 
-class RobotBuilderTestSuite : public ::testing::Test
+
+TEST(RobotBuilderTestSuite, robotGoForward)
 {
-public:
-    RobotBuilderTestSuite() : builder(wrapperMock), m_sut(builder.build()) {}
-
+    unsigned int speed = 700;
     ArduinoWrapperMock wrapperMock;
-    RobotBuilder builder;
-    std::unique_ptr<Robot> m_sut;
-};
 
-TEST_F(RobotBuilderTestSuite, sanity)
-{
-    m_sut->goForward(700);
+    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::GpioNodemcuV2_D1, GpioMode::GpioMode_Pwm));
+    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::GpioNodemcuV2_D3, GpioMode::GpioMode_Output));
+    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::GpioNodemcuV2_D2, GpioMode::GpioMode_Pwm));
+    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::GpioNodemcuV2_D4, GpioMode::GpioMode_Output));
 
-/*    EXPECT_CALL(wrapperMock, _pinMode(Pin::D1, Mode::Pwm));
-    EXPECT_CALL(wrapperMock, _pinMode(Pin::D3, Mode::Output));
-    EXPECT_CALL(wrapperMock, _pinMode(Pin::D2, Mode::Pwm));
-    EXPECT_CALL(wrapperMock, _pinMode(Pin::D4, Mode::Output)); */
-    EXPECT_CALL(wrapperMock, _analogWrite(GpioNodemcuV2::GpioNodemcuV2_D2, 700));
-//    EXPECT_CALL(wrapperMock, _digitalWrite(Pin::D3, Low));
-//    EXPECT_CALL(wrapperMock, _analogWrite(Pin::D2, 700));
-//    EXPECT_CALL(wrapperMock, _digitalWrite(Pin::D4, Low));
-/*    EXPECT_CALL(wrapperMock, _pinMode(Pin::D4, Mode::Input));
-    EXPECT_CALL(wrapperMock, _pinMode(Pin::D2, Mode::Input));
-    EXPECT_CALL(wrapperMock, _pinMode(Pin::D3, Mode::Input));
-    EXPECT_CALL(wrapperMock, _pinMode(Pin::D1, Mode::Input)); */
+    EXPECT_CALL(wrapperMock, _analogWrite(GpioNodemcuV2::GpioNodemcuV2_D1, speed));
+    EXPECT_CALL(wrapperMock, _analogWrite(GpioNodemcuV2::GpioNodemcuV2_D2, speed));
+    EXPECT_CALL(wrapperMock, _digitalWrite(GpioNodemcuV2::GpioNodemcuV2_D3, GpioDigitalValue::GpioValue_Low));
+    EXPECT_CALL(wrapperMock, _digitalWrite(GpioNodemcuV2::GpioNodemcuV2_D4, GpioDigitalValue::GpioValue_Low));
 
+    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::GpioNodemcuV2_D4, GpioMode::GpioMode_Input));
+    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::GpioNodemcuV2_D2, GpioMode::GpioMode_Input));
+    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::GpioNodemcuV2_D3, GpioMode::GpioMode_Input));
+    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::GpioNodemcuV2_D1, GpioMode::GpioMode_Input));
+
+    RobotBuilder builder(wrapperMock);
+    std::unique_ptr<Robot> m_sut(builder.build());
+    m_sut->goForward(speed);
 }
 
