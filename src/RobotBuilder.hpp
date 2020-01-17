@@ -7,10 +7,10 @@ public:
     RobotBuilder();
     RobotBuilder(IArduinoWrapper& nodemcuWrapper)
         : nodemcu(nodemcuWrapper),
-          pin_A_speed(new GpioPort(nodemcu, GpioNodemcuV2::GpioNodemcuV2_D1, GpioMode::GpioMode_Pwm)),
-          pin_A_direction(new GpioPort(nodemcu, GpioNodemcuV2::GpioNodemcuV2_D3, GpioMode::GpioMode_Output)),
-          pin_B_speed(new GpioPort(nodemcu, GpioNodemcuV2::GpioNodemcuV2_D2, GpioMode::GpioMode_Pwm)),
-          pin_B_direction(new GpioPort(nodemcu, GpioNodemcuV2::GpioNodemcuV2_D4, GpioMode::GpioMode_Output)),
+          pin_A_speed(new GpioPort(nodemcu, GpioNodemcuV2::D1, GpioMode::GpioMode_Pwm)),
+          pin_A_direction(new GpioPort(nodemcu, GpioNodemcuV2::D3, GpioMode::GpioMode_Output)),
+          pin_B_speed(new GpioPort(nodemcu, GpioNodemcuV2::D2, GpioMode::GpioMode_Pwm)),
+          pin_B_direction(new GpioPort(nodemcu, GpioNodemcuV2::D4, GpioMode::GpioMode_Output)),
           motor_A(std::move(pin_A_speed),
                   std::move(pin_A_direction),
                   motor_A_correction,

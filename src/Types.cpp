@@ -50,27 +50,27 @@ std::ostream& operator<<(std::ostream& os, GpioNodemcuV2 value)
     os << "Pin::";
     switch (value)
     {
-        case GpioNodemcuV2::GpioNodemcuV2_D0:
+        case GpioNodemcuV2::D0:
             return os << "D0";
-        case GpioNodemcuV2::GpioNodemcuV2_D1:
+        case GpioNodemcuV2::D1:
             return os << "D1";
-        case GpioNodemcuV2::GpioNodemcuV2_D2:
+        case GpioNodemcuV2::D2:
             return os << "D2";
-        case GpioNodemcuV2::GpioNodemcuV2_D3:
+        case GpioNodemcuV2::D3:
             return os << "D3";
-        case GpioNodemcuV2::GpioNodemcuV2_D4:
+        case GpioNodemcuV2::D4:
             return os << "D4";
-        case GpioNodemcuV2::GpioNodemcuV2_D5:
+        case GpioNodemcuV2::D5:
             return os << "D5";
-        case GpioNodemcuV2::GpioNodemcuV2_D6:
+        case GpioNodemcuV2::D6:
             return os << "D6";
-        case GpioNodemcuV2::GpioNodemcuV2_D7:
+        case GpioNodemcuV2::D7:
             return os << "D7";
-        case GpioNodemcuV2::GpioNodemcuV2_D8:
+        case GpioNodemcuV2::D8:
             return os << "D8";
-        case GpioNodemcuV2::GpioNodemcuV2_D9:
+        case GpioNodemcuV2::D9:
             return os << "D9";
-        case GpioNodemcuV2::GpioNodemcuV2_D10:
+        case GpioNodemcuV2::D10:
             return os << "D10";
     }
     return os;

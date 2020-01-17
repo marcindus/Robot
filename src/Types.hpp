@@ -44,17 +44,17 @@ std::ostream& operator << (std::ostream&, GpioPin);
 
 enum class GpioNodemcuV2
 {
-    GpioNodemcuV2_D0 = 16,
-    GpioNodemcuV2_D1 = 5,
-    GpioNodemcuV2_D2 = 4,
-    GpioNodemcuV2_D3 = 0,
-    GpioNodemcuV2_D4 = 2,
-    GpioNodemcuV2_D5 = 14,
-    GpioNodemcuV2_D6 = 12,
-    GpioNodemcuV2_D7 = 13,
-    GpioNodemcuV2_D8 = 15,
-    GpioNodemcuV2_D9 = 3,
-    GpioNodemcuV2_D10 = 1
+    D0 = 16,
+    D1 = 5,
+    D2 = 4,
+    D3 = 0,
+    D4 = 2,
+    D5 = 14,
+    D6 = 12,
+    D7 = 13,
+    D8 = 15,
+    D9 = 3,
+    D10 = 1
 };
 
 std::ostream& operator << (std::ostream&, GpioNodemcuV2);
