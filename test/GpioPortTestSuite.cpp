@@ -6,21 +6,17 @@
 #include "GpioException.hpp"
 #include "Types.hpp"
 
-using ::testing::NiceMock;
-using ::testing::Return;
-using ::testing::StrictMock;
-
 class GpioPortTestSuite : public ::testing::Test
 {
 public:
     GpioPortTestSuite()
-        : gpioPortOutput(wrapperMock, GpioNodemcuV2::D1, GpioMode::GpioMode_Output),
-          gpioPortInput(wrapperMock, GpioNodemcuV2::D5, GpioMode::GpioMode_Input),
-          gpioPortPwm(wrapperMock, GpioNodemcuV2::D4, GpioMode::GpioMode_Pwm)
+        : gpioPortOutput(wrapperMock, GpioNodemcuV2::D1, GpioMode::Output),
+          gpioPortInput(wrapperMock, GpioNodemcuV2::D5, GpioMode::Input),
+          gpioPortPwm(wrapperMock, GpioNodemcuV2::D4, GpioMode::Pwm)
     {
     }
 
-    NiceMock<ArduinoWrapperMock> wrapperMock;
+    ArduinoWrapperMock wrapperMock;
     GpioPort gpioPortOutput;
     GpioPort gpioPortInput;
     GpioPort gpioPortPwm;
@@ -29,9 +25,9 @@ public:
 TEST_F(GpioPortTestSuite, checkWpiNumberAndGpioMode)
 {
     EXPECT_EQ(gpioPortOutput.getGpioPort(), GpioNodemcuV2::D1);
-    EXPECT_EQ(gpioPortOutput.getMode(), GpioMode::GpioMode_Output);
-    EXPECT_EQ(gpioPortInput.getMode(), GpioMode::GpioMode_Input);
-    EXPECT_EQ(gpioPortPwm.getMode(), GpioMode::GpioMode_Pwm);
+    EXPECT_EQ(gpioPortOutput.getMode(), GpioMode::Output);
+    EXPECT_EQ(gpioPortInput.getMode(), GpioMode::Input);
+    EXPECT_EQ(gpioPortPwm.getMode(), GpioMode::Pwm);
 }
 
 // Todo: add tests with exceptions etc...

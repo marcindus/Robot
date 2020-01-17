@@ -18,11 +18,11 @@ std::ostream& operator<<(std::ostream& os, GpioMode value)
     os << "Mode:";
     switch (value)
     {
-        case GpioMode::GpioMode_Input:
+        case GpioMode::Input:
             return os << "Input";
-        case GpioMode::GpioMode_Output:
+        case GpioMode::Output:
             return os << "Output";
-        case GpioMode::GpioMode_Pwm:
+        case GpioMode::Pwm:
             return os << "Pwm";
     }
     return os;

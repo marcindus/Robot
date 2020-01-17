@@ -14,20 +14,20 @@ TEST(RobotBuilderTestSuite, robotGoForward)
     unsigned int speed = 700;
     ArduinoWrapperMock wrapperMock;
 
-    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::D1, GpioMode::GpioMode_Pwm));
-    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::D3, GpioMode::GpioMode_Output));
-    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::D2, GpioMode::GpioMode_Pwm));
-    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::D4, GpioMode::GpioMode_Output));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D1, GpioMode::Pwm));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D3, GpioMode::Output));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D2, GpioMode::Pwm));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D4, GpioMode::Output));
 
-    EXPECT_CALL(wrapperMock, _analogWrite(GpioNodemcuV2::D1, speed));
-    EXPECT_CALL(wrapperMock, _analogWrite(GpioNodemcuV2::D2, speed));
-    EXPECT_CALL(wrapperMock, _digitalWrite(GpioNodemcuV2::D3, GpioDigitalValue::GpioValue_Low));
-    EXPECT_CALL(wrapperMock, _digitalWrite(GpioNodemcuV2::D4, GpioDigitalValue::GpioValue_Low));
+    EXPECT_CALL(wrapperMock, analogWrite(GpioNodemcuV2::D1, speed));
+    EXPECT_CALL(wrapperMock, analogWrite(GpioNodemcuV2::D2, speed));
+    EXPECT_CALL(wrapperMock, digitalWrite(GpioNodemcuV2::D3, GpioDigitalValue::GpioValue_Low));
+    EXPECT_CALL(wrapperMock, digitalWrite(GpioNodemcuV2::D4, GpioDigitalValue::GpioValue_Low));
 
-    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::D4, GpioMode::GpioMode_Input));
-    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::D2, GpioMode::GpioMode_Input));
-    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::D3, GpioMode::GpioMode_Input));
-    EXPECT_CALL(wrapperMock, _pinMode(GpioNodemcuV2::D1, GpioMode::GpioMode_Input));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D4, GpioMode::Input));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D2, GpioMode::Input));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D3, GpioMode::Input));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D1, GpioMode::Input));
 
     RobotBuilder builder(wrapperMock);
     std::unique_ptr<Robot> m_sut(builder.build());

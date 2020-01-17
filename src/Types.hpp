@@ -11,9 +11,9 @@ std::ostream& operator << (std::ostream&, MotorDirection);
 
 enum class GpioMode
 {
-    GpioMode_Input = 0,
-    GpioMode_Output = 1,
-    GpioMode_Pwm = 2
+    Input = 0,
+    Output = 1,
+    Pwm = 2
 };
 
 std::ostream& operator << (std::ostream&, GpioMode);
