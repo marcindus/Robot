@@ -5,7 +5,7 @@
 #include "GpioPort.hpp"
 #include "GpioException.hpp"
 #include "Types.hpp"
-
+/*
 class GpioPortTestSuite : public ::testing::Test
 {
 public:
@@ -21,9 +21,24 @@ public:
     GpioPort gpioPortInput;
     GpioPort gpioPortPwm;
 };
-
-TEST_F(GpioPortTestSuite, checkWpiNumberAndGpioMode)
+*/
+TEST(GpioPortTestSuite, checkWpiNumberAndGpioMode)
 {
+
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D1, GpioMode::Output));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D4, GpioMode::Pwm));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D5, GpioMode::Input));
+
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D4, GpioMode::Input));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D5, GpioMode::Input));
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D1, GpioMode::Input));
+
+    ArduinoWrapperMock wrapperMock;
+
+    GpioPort gpioPortOutput(wrapperMock, GpioNodemcuV2::D1, GpioMode::Output);
+    GpioPort gpioPortInput(wrapperMock, GpioNodemcuV2::D5, GpioMode::Input);
+    GpioPort gpioPortPwm(wrapperMock, GpioNodemcuV2::D4, GpioMode::Pwm);
+
     EXPECT_EQ(gpioPortOutput.getGpioPort(), GpioNodemcuV2::D1);
     EXPECT_EQ(gpioPortOutput.getMode(), GpioMode::Output);
     EXPECT_EQ(gpioPortInput.getMode(), GpioMode::Input);

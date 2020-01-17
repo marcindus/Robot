@@ -15,7 +15,7 @@ std::ostream& operator<<(std::ostream& os, MotorDirection value)
 
 std::ostream& operator<<(std::ostream& os, GpioMode value)
 {
-    os << "Mode:";
+    os << "GpioMode::";
     switch (value)
     {
         case GpioMode::Input:
@@ -30,24 +30,25 @@ std::ostream& operator<<(std::ostream& os, GpioMode value)
 
 std::ostream& operator<<(std::ostream& os, GpioDigitalValue value)
 {
+    os << "GpioDigitalValue";
     switch (value)
     {
         case GpioDigitalValue::GpioValue_Low:
-            return os << "Low";
+            return os << "GpioValue_Low";
         case GpioDigitalValue::GpioValue_High:
-            return os << "High";
+            return os << "GpioValue_High";
     }
     return os;
 }
 
 std::ostream& operator<<(std::ostream& os, GpioPin value)
 {
-    return os << "Pin:" << value;
+    return os << "GpioPin:" << value;
 }
 
 std::ostream& operator<<(std::ostream& os, GpioNodemcuV2 value)
 {
-    os << "Pin::";
+    os << "GpioNodemcuV2::";
     switch (value)
     {
         case GpioNodemcuV2::D0:
