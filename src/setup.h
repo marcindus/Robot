@@ -209,15 +209,15 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
       Serial.printf("[%u] get Text: %s\n", num, payload);
 
       if (payload[0] == '#') { }
-      else if (payload[0] == "FORWARD") { }
-      else if (payload[0] == "LEFT"){  }
-      else if (payload[0] == "RIGT"){  }
-      else if (payload[0] == "BACKWARD"){  }
+      else if (payload[0] == "FORWARD") { Serial.print("Forward");}
+      else if (payload[0] == "LEFT"){ Serial.print("Left"); }
+      else if (payload[0] == "RIGHT"){ Serial.print("Right"); }
+      else if (payload[0] == "BACKWARD"){ Serial.print("Backward"); }
       break;
   }
 }
 
-String formatBytes(size_t bytes) { 
+String formatBytes(size_t bytes) {
    // convert sizes in bytes to KB and MB
   if (bytes < 1024) {
     return String(bytes) + "B";
