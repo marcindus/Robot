@@ -7,6 +7,13 @@
 #include "Types.hpp"
 #include "GpioPort.hpp"
 
+TEST(RobotBuilderTestSuite, buildRobot) {
+    
+    ArduinoWrapperMock wrapperMock;
+    RobotBuilder builder(wrapperMock);
+    std::unique_ptr<Robot> m_sut(builder.build());
+
+}
 
 
 TEST(RobotBuilderTestSuite, robotGoForward)
