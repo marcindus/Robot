@@ -5,35 +5,17 @@
 #include "GpioPort.hpp"
 #include "GpioException.hpp"
 #include "Types.hpp"
-/*
-class GpioPortTestSuite : public ::testing::Test
-{
-public:
-    GpioPortTestSuite()
-        : gpioPortOutput(wrapperMock, GpioNodemcuV2::D1, GpioMode::Output),
-          gpioPortInput(wrapperMock, GpioNodemcuV2::D5, GpioMode::Input),
-          gpioPortPwm(wrapperMock, GpioNodemcuV2::D4, GpioMode::Pwm)
-    {
-    }
 
-    ArduinoWrapperMock wrapperMock;
-    GpioPort gpioPortOutput;
-    GpioPort gpioPortInput;
-    GpioPort gpioPortPwm;
-};
-*/
 TEST(GpioPortTestSuite, checkWpiNumberAndGpioMode)
 {
 
+    ArduinoWrapperMock wrapperMock;
+
     EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D1, GpioMode::Output));
     EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D4, GpioMode::Pwm));
-    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D5, GpioMode::Input));
-
+    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D5, GpioMode::Input)).Times(2);
     EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D4, GpioMode::Input));
-    EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D5, GpioMode::Input));
     EXPECT_CALL(wrapperMock, pinMode(GpioNodemcuV2::D1, GpioMode::Input));
-
-    ArduinoWrapperMock wrapperMock;
 
     GpioPort gpioPortOutput(wrapperMock, GpioNodemcuV2::D1, GpioMode::Output);
     GpioPort gpioPortInput(wrapperMock, GpioNodemcuV2::D5, GpioMode::Input);
