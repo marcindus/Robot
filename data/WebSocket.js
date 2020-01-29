@@ -19,27 +19,30 @@ connection.onclose = function(){
 function forward()
 {
     console.log('Forward');
-    connection.send('FORWARD');
+    connection.send('F');
 };
 
 
 function backward()
 {
     console.log('Backward');
-    connection.send('BACKWARD');
+    connection.send('B');
 };
 
 
 function left()
 {
     console.log('Left');
-    connection.send('LEFT');
+    connection.send('L');
 };
 
-
-function backward()
+function right()
 {
-    connection.send('BACKWARD');
+    console.log('Right');
+    connection.send('R');
 };
+
+
+
 
 

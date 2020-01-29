@@ -1,28 +1,37 @@
 #pragma once
-
-#include <ESP8266WiFi.h>
+#include <ESP8266WiFi.h> 
 #include <ESP8266WiFiMulti.h>
-#include <ArduinoOTA.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
+#include <ArduinoOTA.h>
 #include <FS.h>
 #include <WebSocketsServer.h>
 
-ESP8266WiFiMulti wifiMulti;       // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
+void setup_network();
+void  startWiFi();      
+void  startOTA();       
+void  startSPIFFS();    
+void  startWebSocket(); 
+void  startMDNS();      
+void  startServer();    
+String formatBytes(size_t bytes); 
+String getContentType(String filename); 
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght);
 
-ESP8266WebServer server(80);       // create a web server on port 80
-WebSocketsServer webSocket(81);    // create a websocket server on port 81
+void handleNotFound();
+bool handleFileRead(String path);
+void handleFileUpload();
 
-File fsUploadFile;                                    // a File variable to temporarily store the received file
+ESP8266WiFiMulti wifiMulti;      
+ESP8266WebServer server(80);       
+WebSocketsServer webSocket(81);   
 
-const char *ssid = "ESP8266 Access Point"; // The name of the Wi-Fi network that will be created
-const char *password = "thereisnospoon";   // The password required to connect to it, leave blank for an open network
-const char *OTAName = "ESP8266";           // A name and a password for the OTA service
+File fsUploadFile;                                    
+const char *OTAName = "ESP8266";           
 const char *OTAPassword = "esp8266";
-const char* mdnsName = "esp8266"; // Domain name for the mDNS responder
+const char* mdnsName = "esp8266"; 
 
-
-void setup()
+void setup_network()
 {
     startWiFi();                 // Start a Wi-Fi access point, and try to connect to some given access points. Then wait for either an AP or STA connection
     startOTA();                  // Start the OTA service
@@ -32,25 +41,15 @@ void setup()
     startServer();               // Start a HTTP server with a file read handler and an upload handler
 }
 
-void loop()
-{
-  webSocket.loop();                           // constantly check for websocket events
-  server.handleClient();                      // run the server
-  ArduinoOTA.handle();                        // listen for OTA events
-}
-
-
-
-
 void startWiFi()
 {
-   // Start a Wi-Fi access point, and try to connect to some given access points. Then wait for either an AP or STA connection
-  WiFi.softAP(ssid, password);             // Start the access point
-  Serial.print("Access Point \"");
-  Serial.print(ssid);
-  Serial.println("\" started\r\n");
+  // Start a Wi-Fi access point, and try to connect to some given access points. Then wait for either an AP or STA connection
+  //WiFi.softAP(ssid, pass);             // Start the access point
+  //Serial.print("Access Point \"");
+  //Serial.print(ssid);
+  //Serial.println("\" started\r\n");
 
-  wifiMulti.addAP("ssid_from_AP_1", "your_password_for_AP_1");   // add Wi-Fi networks you want to connect to
+  wifiMulti.addAP(ssid, pass);   // add Wi-Fi networks you want to connect to
   wifiMulti.addAP("ssid_from_AP_2", "your_password_for_AP_2");
   wifiMulti.addAP("ssid_from_AP_3", "your_password_for_AP_3");
 
@@ -71,7 +70,7 @@ void startWiFi()
   Serial.println("\r\n");
 }
 
-void startOTA(
+void startOTA()
 {
   ArduinoOTA.setHostname(OTAName);
   ArduinoOTA.setPassword(OTAPassword);
@@ -138,7 +137,6 @@ void startServer() { // Start a HTTP server with a file read handler and an uplo
   Serial.println("HTTP server started.");
 }
 
-/*__________________________________________________________SERVER_HANDLERS__________________________________________________________*/
 
 void handleNotFound(){ // if the requested file or page doesn't exist, return a 404 not found error
   if(!handleFileRead(server.uri())){          // check if the file exists in the flash memory (SPIFFS), if so, send it
@@ -202,29 +200,37 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
     case WStype_CONNECTED: {              // if a new websocket connection is established
         IPAddress ip = webSocket.remoteIP(num);
         Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
-        rainbow = false;                  // Turn rainbow off when a new connection is established
       }
       break;
     case WStype_TEXT:                     // if new text data is received
       Serial.printf("[%u] get Text: %s\n", num, payload);
 
       if (payload[0] == '#') { }
-      else if (payload[0] == "FORWARD") { Serial.print("Forward");}
-      else if (payload[0] == "LEFT"){ Serial.print("Left"); }
-      else if (payload[0] == "RIGHT"){ Serial.print("Right"); }
-      else if (payload[0] == "BACKWARD"){ Serial.print("Backward"); }
+      else if (payload[0] == 'F') { Serial.print("Forward");}
+      else if (payload[0] == 'L'){ Serial.print("Left"); }
+      else if (payload[0] == 'R'){ Serial.print("Right"); }
+      else if (payload[0] == 'B'){ Serial.print("Backward"); }
       break;
   }
 }
 
 String formatBytes(size_t bytes) {
    // convert sizes in bytes to KB and MB
-  if (bytes < 1024) {
+  if (bytes < 1024) 
+  {
     return String(bytes) + "B";
-  } else if (bytes < (1024 * 1024)) {
+  } 
+  else if (bytes < (1024 * 1024)) 
+  {
     return String(bytes / 1024.0) + "KB";
-  } else if (bytes < (1024 * 1024 * 1024)) {
+  } 
+  else if (bytes < (1024 * 1024 * 1024)) 
+  {
     return String(bytes / 1024.0 / 1024.0) + "MB";
+  }
+  else
+  {
+    return String(bytes);
   }
 }
 
