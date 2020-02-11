@@ -7,7 +7,10 @@
 #include <FS.h>
 #include <WebSocketsServer.h>
 
-void setup_network();
+#include "ArduinoWrapper.hpp"
+#include "RobotBuilder.hpp"
+
+void setup_robot();
 void  startWiFi();      
 void  startOTA();       
 void  startSPIFFS();    
@@ -31,23 +34,26 @@ const char *OTAName = "ESP8266";
 const char *OTAPassword = "esp8266";
 const char* mdnsName = "esp8266"; 
 
-void setup_network()
+ArduinoWrapper nodemcuWrapper;
+RobotBuilder builder(nodemcuWrapper);
+std::unique_ptr<Robot> robot_ptr = nullptr;
+
+void setup_robot()
 {
-    startWiFi();                 // Start a Wi-Fi access point, and try to connect to some given access points. Then wait for either an AP or STA connection
-    startOTA();                  // Start the OTA service
-    startSPIFFS();               // Start the SPIFFS and list all contents
-    startWebSocket();            // Start a WebSocket server
-    startMDNS();                 // Start the mDNS responder
-    startServer();               // Start a HTTP server with a file read handler and an upload handler
+    robot_ptr = builder.build();    
+
+    startWiFi();               
+    startOTA();               
+    startSPIFFS();           
+    startWebSocket();       
+    startMDNS();           
+    startServer();        
 }
 
 void startWiFi()
 {
-  // Start a Wi-Fi access point, and try to connect to some given access points. Then wait for either an AP or STA connection
   //WiFi.softAP(ssid, pass);             // Start the access point
-  //Serial.print("Access Point \"");
-  //Serial.print(ssid);
-  //Serial.println("\" started\r\n");
+  //Serial.print("Access Point \""); Serial.print(ssid); Serial.println("\" started\r\n");
 
   wifiMulti.addAP(ssid, pass);   // add Wi-Fi networks you want to connect to
   wifiMulti.addAP("ssid_from_AP_2", "your_password_for_AP_2");
@@ -59,14 +65,12 @@ void startWiFi()
     Serial.print('.');
   }
   Serial.println("\r\n");
-  if(WiFi.softAPgetStationNum() == 0) {      // If the ESP is connected to an AP
+  if(WiFi.softAPgetStationNum() == 0) {    
     Serial.print("Connected to ");
-    Serial.println(WiFi.SSID());             // Tell us what network we're connected to
+    Serial.println(WiFi.SSID());          
     Serial.print("IP address:\t");
-    Serial.print(WiFi.localIP());            // Send the IP address of the ESP8266 to the computer
-  } else {                                   // If a station is connected to the ESP SoftAP
-    Serial.print("Station connected to ESP8266 AP");
-  }
+    Serial.print(WiFi.localIP());          
+  } else {  Serial.print("Station connected to ESP8266 AP"); }
   Serial.println("\r\n");
 }
 
@@ -75,17 +79,11 @@ void startOTA()
   ArduinoOTA.setHostname(OTAName);
   ArduinoOTA.setPassword(OTAPassword);
 
-  ArduinoOTA.onStart([]() 
-          {
-    Serial.println("Start");
-  });
-  ArduinoOTA.onEnd([]() {
-    Serial.println("\r\nEnd");
-  });
-  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-  });
-  ArduinoOTA.onError([](ota_error_t error) {
+  ArduinoOTA.onStart([]() { Serial.println("Start"); });
+  ArduinoOTA.onEnd([]() { Serial.println("\r\nEnd"); });
+  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) { Serial.printf("Progress: %u%%\r", (progress / (total / 100))); });
+  ArduinoOTA.onError([](ota_error_t error) 
+  {
     Serial.printf("Error[%u]: ", error);
     if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
     else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
@@ -194,28 +192,30 @@ void handleFileUpload(){
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
   switch (type) {
-    case WStype_DISCONNECTED:             // if the websocket is disconnected
+    case WStype_DISCONNECTED:             
       Serial.printf("[%u] Disconnected!\n", num);
       break;
-    case WStype_CONNECTED: {              // if a new websocket connection is established
+    case WStype_CONNECTED: {            
         IPAddress ip = webSocket.remoteIP(num);
         Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
       }
       break;
-    case WStype_TEXT:                     // if new text data is received
+    case WStype_TEXT:                  
       Serial.printf("[%u] get Text: %s\n", num, payload);
 
       if (payload[0] == '#') { }
-      else if (payload[0] == 'F') { Serial.print("Forward");}
-      else if (payload[0] == 'L'){ Serial.print("Left"); }
-      else if (payload[0] == 'R'){ Serial.print("Right"); }
-      else if (payload[0] == 'B'){ Serial.print("Backward"); }
+      else if (payload[0] == 'F') { Serial.print("Forward");
+     //     robot_ptr->goForward(800); 
+      }
+      else if (payload[0] == 'L'){ Serial.print("Left"); robot_ptr->turnLeft();}
+      else if (payload[0] == 'R'){ Serial.print("Right"); robot_ptr->turnRight();}
+      else if (payload[0] == 'B'){ Serial.print("Backward");  robot_ptr->goBackward(800); }
+      else if (payload[0] == 'S'){ Serial.print("Stop"); robot_ptr->stay(); }
       break;
   }
 }
 
 String formatBytes(size_t bytes) {
-   // convert sizes in bytes to KB and MB
   if (bytes < 1024) 
   {
     return String(bytes) + "B";

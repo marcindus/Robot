@@ -22,6 +22,12 @@ function forward()
     connection.send('F');
 };
 
+function stop()
+{
+    console.log('Stop');
+    connection.send('S');
+};
+
 
 function backward()
 {

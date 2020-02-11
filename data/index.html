@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>LED Control</title>
+    <title>Robot control</title>
     <link href='main.css' rel='stylesheet' type='text/css'>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
     <link rel="icon" type="image/png" sizes="144x144"  href="/favicon-144x144.png">
@@ -20,17 +20,17 @@
             <table>
                 <tr>
                     <td style="width:14.4px; text-align: right"> </td>
-                    <td> <p style="margin:8px 0px"><button id="forward" class="button" style="background-color:#999" onclick="rainbowEffect();">Forward</button></p></td>
+                    <td> <p style="margin:8px 0px"><button id="forward" class="button" style="background-color:#999" onclick="forward();">Forward</button></p></td>
                     <td style="width:14.4px; text-align: right"> </td>
                 </tr>
                 <tr>
-                    <td> <p style="margin:8px 0px"><button id="left" class="button" style="background-color:#999" onclick="rainbowEffect();">Left</button></p></td>
-                    <td style="width:14.4px; text-align: center"> </td>
-                    <td> <p style="margin:8px 0px"><button id="right" class="button" style="background-color:#999" onclick="rainbowEffect();">Right</button></p></td>
+                    <td> <p style="margin:8px 0px"><button id="left" class="button" style="background-color:#999" onclick="left();">Left</button></p></td>
+                    <td> <p style="margin:8px 0px"><button id="stop" class="button" style="background-color:#999" onclick="stop();">Stop</button></p></td>
+                    <td> <p style="margin:8px 0px"><button id="right" class="button" style="background-color:#999" onclick="right();">Right</button></p></td>
                 </tr>
                 <tr>
                     <td style="width:14.4px; text-align: right"> </td>
-                    <td> <p style="margin:8px 0px"><button id="backward" class="button" style="background-color:#999" onclick="rainbowEffect();">Backward</button></p></td>
+                    <td> <p style="margin:8px 0px"><button id="backward" class="button" style="background-color:#999" onclick="backward();">Backward</button></p></td>
                     <td style="width:14.4px; text-align: right"> </td>
                 </tr>
             </table>
