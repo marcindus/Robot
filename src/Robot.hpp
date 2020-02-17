@@ -8,6 +8,8 @@ public:
     Robot(Driver& p_driver);
     void goBackward(unsigned int speed);
     void goForward(unsigned int speed);
+    void goBackward();
+    void goForward();
     void turnRight();
     void turnLeft();
     void stepForward();

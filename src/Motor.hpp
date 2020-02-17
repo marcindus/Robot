@@ -15,10 +15,10 @@ public:
           int m_maxSpeed);
 
     void runForward(int speed) override;
-    void runForwardSlowly() override;
+    void runForward() override;
     void stop() override;
     void runBackward(int speed) override;
-    void runBackwardSlowly() override;
+    void runBackward() override;
     bool isRunning() override;
     MotorDirection getDirection() override;
     unsigned int getCorrection() override;
@@ -30,7 +30,7 @@ private:
     bool m_isRunning = false;
     int m_correction = 0;
     MotorDirection m_direction = MotorDirection::Forward;
-    int m_minSpeed = 600;
+    int m_minSpeed = 700;
     int m_maxSpeed = 1024;
     void setSpeed(int speed);
 };

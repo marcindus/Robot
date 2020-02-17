@@ -7,6 +7,14 @@ void ArduinoWrapper::pinMode(GpioNodemcuV2 p_pin, GpioMode p_mode) const
     Serial.print(static_cast<unsigned>(p_pin)); 
     Serial.print(static_cast<unsigned>(p_mode));
     ::pinMode(static_cast<unsigned>(p_pin), static_cast<unsigned>(p_mode));
+    if(p_mode == GpioMode::Output) 
+    { 
+        ::digitalWrite(static_cast<unsigned>(p_pin), 0);
+    }
+    else if(p_mode == GpioMode::Pwm) 
+    { 
+        ::analogWrite(static_cast<unsigned>(p_pin), 0);
+    }
 };
 
 void ArduinoWrapper::analogWrite(GpioNodemcuV2 p_pin, unsigned int p_signal) const

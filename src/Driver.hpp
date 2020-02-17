@@ -10,6 +10,8 @@ public:
     Driver(Motor& p_leftMotor, Motor& p_rightMotor);
     void backward(unsigned int speed);
     void forward(unsigned int speed);
+    void backward();
+    void forward();
     void turnRight();
     void turnLeft();
     void stay();

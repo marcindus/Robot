@@ -8,11 +8,21 @@ void Robot::goBackward(unsigned int speed)
 {
     m_driver.backward(speed);
 }
+void Robot::goBackward()
+{
+    m_driver.backward();
+}
+
 
 void Robot::goForward(unsigned int speed)
 {
     m_driver.forward(speed);
 }
+void Robot::goForward()
+{
+    m_driver.forward();
+}
+
 
 void Robot::turnRight()
 {
@@ -41,7 +51,3 @@ void Robot::stay()
     m_driver.stay();
 }
 
-// Driver&  m_driver;
-// Wifi
-// Sensors
-// Steering interface

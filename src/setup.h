@@ -201,15 +201,18 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
       }
       break;
     case WStype_TEXT:                  
-      Serial.printf("[%u] get Text: %s\n", num, payload);
-
-      if (payload[0] == '#') { }
+    if(payload[0] == '#') 
+    {
+        uint32_t correction  = (uint32_t) strtol((const char *) &payload[1], NULL, 16); 
+        Serial.print("Correction ");
+        Serial.print(correction);
+    }
       else if (payload[0] == 'F') { Serial.print("Forward");
-     //     robot_ptr->goForward(800); 
+          robot_ptr->goForward(); 
       }
       else if (payload[0] == 'L'){ Serial.print("Left"); robot_ptr->turnLeft();}
       else if (payload[0] == 'R'){ Serial.print("Right"); robot_ptr->turnRight();}
-      else if (payload[0] == 'B'){ Serial.print("Backward");  robot_ptr->goBackward(800); }
+      else if (payload[0] == 'B'){ Serial.print("Backward");  robot_ptr->goBackward(); }
       else if (payload[0] == 'S'){ Serial.print("Stop"); robot_ptr->stay(); }
       break;
   }

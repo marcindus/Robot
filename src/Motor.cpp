@@ -45,6 +45,14 @@ void Motor::runForward(int speed)
     m_direction = MotorDirection::Forward;
     m_isRunning = true;
 }
+void Motor::runForward()
+{
+    setSpeed(m_maxSpeed);
+    m_directionPin->write(GpioDigitalValue::GpioValue_Low);
+    m_direction = MotorDirection::Forward;
+    m_isRunning = true;
+}
+
 
 void Motor::stop()
 {
@@ -55,20 +63,19 @@ void Motor::stop()
 
 void Motor::runBackward(int speed)
 {
-    m_directionPin->write(GpioDigitalValue::GpioValue_High);
     setSpeed(speed);
+    m_directionPin->write(GpioDigitalValue::GpioValue_High);
     m_direction = MotorDirection::Backward;
     m_isRunning = true;
 }
 
-void Motor::runForwardSlowly()
-{
-    runForward(m_minSpeed);
-}
 
-void Motor::runBackwardSlowly()
+void Motor::runBackward()
 {
-    runBackward(m_minSpeed);
+    setSpeed(m_maxSpeed);
+    m_directionPin->write(GpioDigitalValue::GpioValue_High);
+    m_direction = MotorDirection::Backward;
+    m_isRunning = true;
 }
 
 bool Motor::isRunning()

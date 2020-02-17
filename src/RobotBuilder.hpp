@@ -35,7 +35,7 @@ private:
     std::unique_ptr<GpioPort> pin_B_direction;
     int motor_A_minSpeed = 700;
     int motor_A_maxSpeed = 1024;
-    int motor_A_correction = 200;
+    int motor_A_correction = 0;
     int motor_B_minSpeed = 700;
     int motor_B_maxSpeed = 1024;
     int motor_B_correction = 0;
