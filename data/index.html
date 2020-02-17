@@ -33,7 +33,13 @@
                     <td> <p style="margin:8px 0px"><button id="backward" class="button" style="background-color:#999" onclick="backward();">Backward</button></p></td>
                     <td style="width:14.4px; text-align: right"> </td>
                 </tr>
+                 <tr>
+                    <td style="width:14.4px; text-align: right">Correction: </td>
+                    <td><input class="enabled" id="correction" type="range" min="0" max="1023" step="1" oninput="sendCorrection();" value="0"></td>
+                </tr>
+
             </table>
+
         </div>
     </center>
 </body>

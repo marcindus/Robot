@@ -48,6 +48,14 @@ function right()
     connection.send('R');
 };
 
+function sendCorrection()
+{
+    var corr = document.getElementById('correction').value;
+    var corrstr = '#'+ corr.toString(16);    
+    console.log('correction: ' + corrstr); 
+    connection.send(corrstr);
+};
+
 
 
 
