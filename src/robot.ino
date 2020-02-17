@@ -20,7 +20,6 @@ void setup()
 
 void loop() 
 {
-  robot_ptr->stay();
   webSocket.loop();  
   server.handleClient(); 
   ArduinoOTA.handle(); 
