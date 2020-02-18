@@ -16,7 +16,6 @@ public:
     void turnLeft();
     void stay();
 
-private:
     Motor& m_leftMotor;
     Motor& m_rightMotor;
 };

@@ -93,6 +93,11 @@ unsigned int Motor::getCorrection()
     return m_correction;
 }
 
+void Motor::setCorrection(unsigned int correction)
+{
+     m_correction = correction;
+}
+
 unsigned int Motor::getMinimalSpeed()
 {
     return m_minSpeed;

@@ -4,6 +4,15 @@ Robot::Robot(Driver& p_driver) : m_driver(p_driver)
 {
 }
 
+void Robot::setLeftCorrection(unsigned int corr)
+{
+    m_driver.m_leftMotor.setCorrection(corr);
+}
+void Robot::setRightCorrection(unsigned int corr)
+{
+    m_driver.m_rightMotor.setCorrection(corr);
+}
+
 void Robot::goBackward(unsigned int speed)
 {
     m_driver.backward(speed);

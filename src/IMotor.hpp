@@ -14,5 +14,6 @@ public:
     virtual bool isRunning() = 0;
     virtual MotorDirection getDirection() = 0;
     virtual unsigned int getCorrection() = 0;
+    virtual void setCorrection(unsigned int) = 0;
     virtual unsigned int getMinimalSpeed() = 0;
 };

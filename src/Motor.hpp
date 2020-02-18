@@ -22,13 +22,14 @@ public:
     bool isRunning() override;
     MotorDirection getDirection() override;
     unsigned int getCorrection() override;
+    void setCorrection(unsigned int) override;
     unsigned int getMinimalSpeed() override;
+    int m_correction = 0;
 
 private:
     std::unique_ptr<IGpioPort> m_speedPin;
     std::unique_ptr<IGpioPort> m_directionPin;
     bool m_isRunning = false;
-    int m_correction = 0;
     MotorDirection m_direction = MotorDirection::Forward;
     int m_minSpeed = 700;
     int m_maxSpeed = 1024;

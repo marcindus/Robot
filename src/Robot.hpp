@@ -16,10 +16,8 @@ public:
     void stepBackward();
     void run();
     void stay();
+    void setLeftCorrection(unsigned int corr);
+    void setRightCorrection(unsigned int corr);
 
-private:
     Driver& m_driver;
-    // Wifi
-    // Sensors
-    // Steering interface
 };
