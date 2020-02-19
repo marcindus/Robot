@@ -14,7 +14,7 @@ public:
           m_gpioDirectionPortMock(new GpioPortMock),
           m_rawSpeedGpioPtr(m_gpioSpeedPortMock.get()),
           m_rawDirectionGpioPtr(m_gpioDirectionPortMock.get()),
-          m_sut(std::move(m_gpioSpeedPortMock), std::move(m_gpioDirectionPortMock), correction, minSpeed, maxSpeed)
+          m_sut(correction, std::move(m_gpioSpeedPortMock), std::move(m_gpioDirectionPortMock),  minSpeed, maxSpeed)
     {
     }
     std::unique_ptr<GpioPortMock> m_gpioSpeedPortMock;
