@@ -1,5 +1,5 @@
 #pragma once
-#include <ESP8266WiFi.h> 
+#include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
@@ -11,28 +11,28 @@
 #include "RobotBuilder.hpp"
 
 void setup_robot();
-void  startWiFi();      
-void  startOTA();       
-void  startSPIFFS();    
-void  startWebSocket(); 
-void  startMDNS();      
-void  startServer();    
-String formatBytes(size_t bytes); 
-String getContentType(String filename); 
+void  startWiFi();
+void  startOTA();
+void  startSPIFFS();
+void  startWebSocket();
+void  startMDNS();
+void  startServer();
+String formatBytes(size_t bytes);
+String getContentType(String filename);
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght);
 
 void handleNotFound();
 bool handleFileRead(String path);
 void handleFileUpload();
 
-ESP8266WiFiMulti wifiMulti;      
-ESP8266WebServer server(80);       
-WebSocketsServer webSocket(81);   
+ESP8266WiFiMulti wifiMulti;
+ESP8266WebServer server(80);
+WebSocketsServer webSocket(81);
 
-File fsUploadFile;                                    
-const char *OTAName = "ESP8266";           
+File fsUploadFile;
+const char *OTAName = "ESP8266";
 const char *OTAPassword = "esp8266";
-const char* mdnsName = "esp8266"; 
+const char* mdnsName = "esp8266";
 
 ArduinoWrapper nodemcuWrapper;
 RobotBuilder builder(nodemcuWrapper);
@@ -40,14 +40,14 @@ std::unique_ptr<Robot> robot_ptr = nullptr;
 
 void setup_robot()
 {
-    robot_ptr = builder.build();    
+    robot_ptr = builder.build();
 
-    startWiFi();               
-    startOTA();               
-    startSPIFFS();           
-    startWebSocket();       
-    startMDNS();           
-    startServer();        
+    startWiFi();
+    startOTA();
+    startSPIFFS();
+    startWebSocket();
+    startMDNS();
+    startServer();
 }
 
 void startWiFi()
@@ -65,11 +65,11 @@ void startWiFi()
     Serial.print('.');
   }
   Serial.println("\r\n");
-  if(WiFi.softAPgetStationNum() == 0) {    
+  if(WiFi.softAPgetStationNum() == 0) {
     Serial.print("Connected to ");
-    Serial.println(WiFi.SSID());          
+    Serial.println(WiFi.SSID());
     Serial.print("IP address:\t");
-    Serial.print(WiFi.localIP());          
+    Serial.print(WiFi.localIP());
   } else {  Serial.print("Station connected to ESP8266 AP"); }
   Serial.println("\r\n");
 }
@@ -82,7 +82,7 @@ void startOTA()
   ArduinoOTA.onStart([]() { Serial.println("Start"); });
   ArduinoOTA.onEnd([]() { Serial.println("\r\nEnd"); });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) { Serial.printf("Progress: %u%%\r", (progress / (total / 100))); });
-  ArduinoOTA.onError([](ota_error_t error) 
+  ArduinoOTA.onError([](ota_error_t error)
   {
     Serial.printf("Error[%u]: ", error);
     if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
@@ -95,7 +95,7 @@ void startOTA()
   Serial.println("OTA ready\r\n");
 }
 
-void startSPIFFS() { 
+void startSPIFFS() {
   // Start the SPIFFS and list all contents
   SPIFFS.begin();                             // Start the SPI Flash File System (SPIFFS)
   Serial.println("SPIFFS started. Contents:");
@@ -192,23 +192,24 @@ void handleFileUpload(){
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
   switch (type) {
-    case WStype_DISCONNECTED:             
+    case WStype_DISCONNECTED:
       Serial.printf("[%u] Disconnected!\n", num);
       break;
-    case WStype_CONNECTED: {            
+    case WStype_CONNECTED: {
         IPAddress ip = webSocket.remoteIP(num);
         Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
       }
       break;
-    case WStype_TEXT:                  
-    if(payload[0] == '#') 
+    case WStype_TEXT:
+    if(payload[0] == '#')
     {
-        uint32_t correction  = (uint32_t) strtol((const char *) &payload[1], NULL, 16); 
+        uint32_t correction  = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
+        // robot_ptr->setCorrection(correction);
         Serial.print("Correction ");
         Serial.print(correction);
     }
       else if (payload[0] == 'F') { Serial.print("Forward");
-          robot_ptr->goForward(); 
+          robot_ptr->goForward();
       }
       else if (payload[0] == 'L'){ Serial.print("Left"); robot_ptr->turnLeft();}
       else if (payload[0] == 'R'){ Serial.print("Right"); robot_ptr->turnRight();}

@@ -4,7 +4,6 @@
 class RobotBuilder
 {
 public:
-    RobotBuilder();
     RobotBuilder(IArduinoWrapper& nodemcuWrapper)
         : nodemcu(nodemcuWrapper),
           pin_A_speed(new GpioPort(nodemcu, GpioNodemcuV2::D1, GpioMode::Pwm)),
