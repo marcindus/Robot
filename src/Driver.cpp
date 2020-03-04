@@ -32,13 +32,11 @@ void Driver::forward(unsigned int speed)
 
 void Driver::turnRight()
 {
-//    m_rightMotor.stop();
     m_rightMotor.runBackward();
     m_leftMotor.runForward();
 }
 void Driver::turnLeft()
 {
-    //m_leftMotor.stop();
     m_leftMotor.runBackward();
     m_rightMotor.runForward();
 }
