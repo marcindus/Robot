@@ -1,5 +1,3 @@
-
-
 const int trigPin = D6;  
 const int echoPin = D7;  
 long duration;
@@ -11,7 +9,7 @@ void ultrasonic_init()
     pinMode(echoPin, INPUT); // Sets the echoPin as an Input
 }
 
-void ultrasonc_measure() 
+void ultrasonic_measure() 
 {
   // Clears the trigPin
     digitalWrite(trigPin, LOW);

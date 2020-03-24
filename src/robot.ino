@@ -8,21 +8,24 @@
 #include <WebSocketsServer.h>
 
 #include "setup.h"
+#include "ultrasonic.h"
 
 void setup()
 {
-    Serial.begin(57600); 
-    setup_robot();
 
-  robot_ptr->stay();
+    ultrasonic_init();
+    Serial.begin(57600); 
+   // setup_robot();
+   // robot_ptr->stay();
 }
 
 
 void loop() 
 {
-  webSocket.loop();  
-  server.handleClient(); 
-  ArduinoOTA.handle(); 
+    ultrasonic_measure();
+    //webSocket.loop();  
+    //server.handleClient(); 
+    //ArduinoOTA.handle(); 
 }
 
 
