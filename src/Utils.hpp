@@ -3,9 +3,6 @@
 #include <iostream>
 #include <sstream>
 
-#define NDEBUG
-#undef  NDEBUG
-
 #ifdef NDEBUG
     #define LOG(...) LogWrapper(__FILE__, __LINE__, __VA_ARGS__)
 #else
@@ -43,8 +40,5 @@ void Log_Recursive(const char* file, int line, std::ostringstream& msg)
 {
    std::cout << file << "(" << line << "): " << msg.str() << std::endl;
 }
-
-
-
 
 
