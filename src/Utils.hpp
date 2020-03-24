@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-//#define NDEBUG
+#define NDEBUG
 #undef  NDEBUG
 
 #ifdef NDEBUG
@@ -11,6 +11,7 @@
 #else
     #define LOG(...) Empty()
 #endif
+
 
 //to do - flag for serial.print with F() https://arduino.stackexchange.com/questions/19330/store-string-using-f-macro
 // Serial.println("\r\n");
@@ -40,7 +41,7 @@ void Log_Recursive(const char* file, int line, std::ostringstream& msg,
 // Terminator
 void Log_Recursive(const char* file, int line, std::ostringstream& msg)
 {
-    std::cout << file << "(" << line << "): " << msg.str() << std::endl;
+   std::cout << file << "(" << line << "): " << msg.str() << std::endl;
 }
 
 
