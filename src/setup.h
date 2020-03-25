@@ -9,6 +9,7 @@
 
 #include "ArduinoWrapper.hpp"
 #include "RobotBuilder.hpp"
+#include "ultrasonic.h"
 
 void setup_robot();
 void  startWiFi();
@@ -17,6 +18,7 @@ void  startSPIFFS();
 void  startWebSocket();
 void  startMDNS();
 void  startServer();
+void  startUltrasonicSensor();
 String formatBytes(size_t bytes);
 String getContentType(String filename);
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght);
@@ -96,12 +98,11 @@ void startOTA()
 }
 
 void startSPIFFS() {
-  // Start the SPIFFS and list all contents
-  SPIFFS.begin();                             // Start the SPI Flash File System (SPIFFS)
+  SPIFFS.begin();
   Serial.println("SPIFFS started. Contents:");
   {
     Dir dir = SPIFFS.openDir("/");
-    while (dir.next()) {                      // List the file system contents
+    while (dir.next()) {
       String fileName = dir.fileName();
       size_t fileSize = dir.fileSize();
       Serial.printf("\tFS File: %s, size: %s\r\n", fileName.c_str(), formatBytes(fileSize).c_str());
@@ -110,23 +111,23 @@ void startSPIFFS() {
   }
 }
 
-void startWebSocket() { // Start a WebSocket server
-  webSocket.begin();                          // start the websocket server
-  webSocket.onEvent(webSocketEvent);          // if there's an incomming websocket message, go to function 'webSocketEvent'
+void startWebSocket() {
+  webSocket.begin();
+  webSocket.onEvent(webSocketEvent);
   Serial.println("WebSocket server started.");
 }
 
-void startMDNS() { // Start the mDNS responder
-  MDNS.begin(mdnsName);                        // start the multicast domain name server
+void startMDNS() {
+  MDNS.begin(mdnsName);
   Serial.print("mDNS responder started: http://");
   Serial.print(mdnsName);
   Serial.println(".local");
 }
 
-void startServer() { // Start a HTTP server with a file read handler and an upload handler
-  server.on("/edit.html",  HTTP_POST, []() {  // If a POST request is sent to the /edit.html address,
+void startServer() {
+  server.on("/edit.html",  HTTP_POST, []() {
     server.send(200, "text/plain", "");
-  }, handleFileUpload);                       // go to 'handleFileUpload'
+  }, handleFileUpload);
 
   server.onNotFound(handleNotFound);          // if someone requests any other file or page, go to function 'handleNotFound'
                                               // and check if the file exists
@@ -207,6 +208,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         // robot_ptr->setCorrection(correction);
         Serial.print("Correction ");
         Serial.print(correction);
+//webSocket.sendTXT(socketNumber, "wpMeter,Arduino," + temp_str + ",1");
     }
       else if (payload[0] == 'F') { Serial.print("Forward");
           robot_ptr->goForward();

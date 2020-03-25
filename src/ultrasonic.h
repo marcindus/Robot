@@ -1,7 +1,7 @@
 const int trigPin = D6;
 const int echoPin = D7;
 
-void ultrasonic_init()
+void startUltrasonicSensor()
 {
     pinMode(trigPin, OUTPUT);
     pinMode(echoPin, INPUT);
