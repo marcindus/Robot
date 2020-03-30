@@ -4,3 +4,8 @@ build
 tags
 *.swp
 *~
+Makefile
+./platformio.ini
+entity_tests/.pyenv
+entity_tests/__pycache__
+
