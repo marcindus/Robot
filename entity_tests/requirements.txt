@@ -1,0 +1,7 @@
+treelib
+requests
+ws4py
+websocket-client
+pytest
+pytest-cov
+virtualenv
