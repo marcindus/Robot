@@ -6,6 +6,7 @@
 #include <ArduinoOTA.h>
 #include <FS.h>
 #include <WebSocketsServer.h>
+#include <stdlib.h>
 
 #include "ArduinoWrapper.hpp"
 #include "RobotBuilder.hpp"
@@ -208,15 +209,64 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         // robot_ptr->setCorrection(correction);
         Serial.print("Correction ");
         Serial.print(correction);
-//webSocket.sendTXT(socketNumber, "wpMeter,Arduino," + temp_str + ",1");
     }
-      else if (payload[0] == 'F') { Serial.print("Forward");
+      else if (payload[0] == 'F') { 
+          Serial.print("Forward"); 
+          webSocket.sendTXT(num, "Forward");
           robot_ptr->goForward();
       }
-      else if (payload[0] == 'L'){ Serial.print("Left"); robot_ptr->turnLeft();}
-      else if (payload[0] == 'R'){ Serial.print("Right"); robot_ptr->turnRight();}
-      else if (payload[0] == 'B'){ Serial.print("Backward");  robot_ptr->goBackward(); }
-      else if (payload[0] == 'S'){ Serial.print("Stop"); robot_ptr->stay(); }
+      else if (payload[0] == 'L'){
+          Serial.print("Left"); 
+          webSocket.sendTXT(num, "Left");
+          robot_ptr->turnLeft();
+      }
+      else if (payload[0] == 'R'){ 
+          Serial.print("Right"); 
+          webSocket.sendTXT(num, "Right");
+          robot_ptr->turnRight();
+      }
+      else if (payload[0] == 'B'){ 
+          Serial.print("Backward"); 
+          webSocket.sendTXT(num, "Backward");
+          robot_ptr->goBackward(); 
+      }
+      else if (payload[0] == 'S'){ 
+          Serial.print("Stop"); 
+          webSocket.sendTXT(num, "Stop");
+          robot_ptr->stay(); 
+      }
+
+      else if (payload[0] == 'D'){  
+          int dist =  getDistance();
+          char arr[10] = "";
+          itoa(dist, arr,10);
+          Serial.print(" Distance ");
+          webSocket.sendTXT(num, arr);
+      }
+
+    case  WStype_ERROR:
+      Serial.printf("[%u] WStype_ERROR!\n", num);
+      break;
+    case  WStype_BIN:
+      Serial.printf("[%u] WStype_BIN!\n", num);
+      break;
+    case  WStype_FRAGMENT_TEXT_START:
+      Serial.printf("[%u] WStype_FRAGMENT_TEXT_START!\n", num);
+      break;
+    case  WStype_FRAGMENT_BIN_START:
+      Serial.printf("[%u] WStype_FRAGMENT_BIN_START!\n", num);
+      break;
+    case  WStype_FRAGMENT:
+      Serial.printf("[%u] WStype_FRAGMENT!\n", num);
+      break;
+    case  WStype_FRAGMENT_FIN:
+      Serial.printf("[%u] WStype_FRAGMENT_FIN!\n", num);
+      break;
+    case  WStype_PING:
+      Serial.printf("[%u] Disconnected!\n", num);
+      break;
+    case  WStype_PONG:
+      Serial.printf("[%u] Disconnected!\n", num);
       break;
   }
 }
