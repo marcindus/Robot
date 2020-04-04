@@ -153,7 +153,8 @@ bool handleFileRead(String path) { // send the right file to the client (if it e
     if (SPIFFS.exists(pathWithGz))                         // If there's a compressed version available
       path += ".gz";                                         // Use the compressed verion
     File file = SPIFFS.open(path, "r");                    // Open the file
-    size_t sent = server.streamFile(file, contentType);    // Send it to the client
+    //size_t sent = server.streamFile(file, contentType);    // Send it to the client
+    server.streamFile(file, contentType);    // Send it to the client
     file.close();                                          // Close the file again
     Serial.println(String("\tSent file: ") + path);
     return true;

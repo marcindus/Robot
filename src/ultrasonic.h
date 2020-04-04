@@ -10,7 +10,6 @@ void startUltrasonicSensor()
 int getDistance()
 {
     long duration;
-    int distance;
     digitalWrite(trigPin, LOW);
     delayMicroseconds(2);
     digitalWrite(trigPin, HIGH);
@@ -18,5 +17,5 @@ int getDistance()
     digitalWrite(trigPin, LOW);
 
     duration = pulseIn(echoPin, HIGH);
-    distance= duration*0.034/2;
+    return  duration*0.034/2;
 }
