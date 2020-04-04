@@ -1,4 +1,5 @@
 treelib
+pyserial
 requests
 ws4py
 websocket-client
