@@ -5,6 +5,12 @@ import time, requests
 import websocket
 import serial
 import time
+import timeout_decorator
+
+LOCAL_TIMEOUT = 3
+PORT = '/dev/ttyUSB0'
+BOUDRATE = 57600
+ROBOT_URL = "ws://esp8266.local:81/"
 
 class RobotWebSocket():
     def __init__(self, url):
@@ -27,18 +33,19 @@ class RobotWebSocket():
 
 class SimpleTest(unittest.TestCase):
     def setUp(self):
-        self.robotUrl = "ws://192.168.1.10:81"
+        self.robotUrl = ROBOT_URL
         self.commands = { "D" : "0", "F" : "Forward" }
 
     def serialLogger(test):
         def wrapper(self):
-            with serial.Serial('/dev/ttyUSB0', 57600, timeout=3) as ser:
+            with serial.Serial(PORT, BOUDRATE, timeout=LOCAL_TIMEOUT) as ser:
                 test(self)
                 filename = "{}_{}.txt".format(time.strftime("%Y%m%d%H%M%S"), test.__name__)
                 with open(filename, 'w') as file:
                     [file.write(str(elem)+ "\n") for elem in ser.readlines()]
         return wrapper
 
+    @timeout_decorator.timeout(LOCAL_TIMEOUT)
     def testGetDistance(self):
         with RobotWebSocket(self.robotUrl) as ws:
             ws.send("D")
@@ -46,6 +53,7 @@ class SimpleTest(unittest.TestCase):
         self.assertEqual(result, self.commands["D"]) 
 
     @serialLogger
+    @timeout_decorator.timeout(LOCAL_TIMEOUT)
     def testRunForward(self):
             with RobotWebSocket(self.robotUrl) as ws:
                 ws.send("F")

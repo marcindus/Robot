@@ -6,3 +6,6 @@ websocket-client
 pytest
 pytest-cov
 virtualenv
+esptool
+pytest-timeout
+timeout_decorator

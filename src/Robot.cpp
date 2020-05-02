@@ -60,3 +60,48 @@ void Robot::stay()
     m_driver.stay();
 }
 
+uint8_t* Robot::handleMessage(uint8_t* payload)
+{
+    std::ostringstream msg;
+    msg << "Received command: ";
+
+    if(payload[0] == '#')
+    {
+    //    uint32_t correction  = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
+    uint32_t correction = 1;
+        // robot_ptr->setCorrection(correction);
+       msg << "Correction " << correction;
+    }
+    else if (payload[0] == 'F') 
+    { 
+        msg <<  "Forward";
+    }
+    else if (payload[0] == 'L')
+    {
+        msg <<  "Left";
+    }
+    else if (payload[0] == 'R')
+    { 
+        msg << "Right";
+    }
+    else if (payload[0] == 'B')
+    { 
+        msg << "Backward"; 
+    }
+    else if (payload[0] == 'S')
+    { 
+        msg << "Stop"; 
+    }
+    else if (payload[0] == 'D')
+    {  
+        //int dist =  getDistance();
+        //char arr[10] = "";
+        //itoa(dist, arr,10);
+        //Serial.print(" Distance ");
+        //   webSocket.sendTXT(num, arr);
+     }
+    std::string str = msg.str();
+    return  reinterpret_cast<uint8_t*>(&str[0]);
+}
+
+

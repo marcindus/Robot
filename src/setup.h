@@ -194,6 +194,7 @@ void handleFileUpload(){
 }
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
+    
   switch (type) {
     case WStype_DISCONNECTED:
       Serial.printf("[%u] Disconnected!\n", num);
@@ -203,48 +204,9 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
       }
       break;
-    case WStype_TEXT:
-    if(payload[0] == '#')
-    {
-        uint32_t correction  = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
-        // robot_ptr->setCorrection(correction);
-        Serial.print("Correction ");
-        Serial.print(correction);
+    case WStype_TEXT: {
+         webSocket.sendTXT(num,robot_ptr->handleMessage(payload));
     }
-      else if (payload[0] == 'F') { 
-          Serial.print("Forward"); 
-          webSocket.sendTXT(num, "Forward");
-          robot_ptr->goForward();
-      }
-      else if (payload[0] == 'L'){
-          Serial.print("Left"); 
-          webSocket.sendTXT(num, "Left");
-          robot_ptr->turnLeft();
-      }
-      else if (payload[0] == 'R'){ 
-          Serial.print("Right"); 
-          webSocket.sendTXT(num, "Right");
-          robot_ptr->turnRight();
-      }
-      else if (payload[0] == 'B'){ 
-          Serial.print("Backward"); 
-          webSocket.sendTXT(num, "Backward");
-          robot_ptr->goBackward(); 
-      }
-      else if (payload[0] == 'S'){ 
-          Serial.print("Stop"); 
-          webSocket.sendTXT(num, "Stop");
-          robot_ptr->stay(); 
-      }
-
-      else if (payload[0] == 'D'){  
-          int dist =  getDistance();
-          char arr[10] = "";
-          itoa(dist, arr,10);
-          Serial.print(" Distance ");
-          webSocket.sendTXT(num, arr);
-      }
-
     case  WStype_ERROR:
       Serial.printf("[%u] WStype_ERROR!\n", num);
       break;
