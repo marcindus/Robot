@@ -12,15 +12,16 @@
 void setup()
 {
     Serial.begin(57600);
-    setup_robot();
+    robot_ptr = builder.build();
+    startWiFi();
+    startWebSocket();
+    startMDNS();
     robot_ptr->stay();
 }
 
 void loop()
 {
     webSocket.loop();
-    server.handleClient();
-    ArduinoOTA.handle();
 }
 
 

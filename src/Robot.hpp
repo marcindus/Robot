@@ -1,7 +1,8 @@
 #pragma once
 
-#include <sstream>
 #include "Driver.hpp"
+#include "Arduino.h"
+
 
 class Robot
 {
@@ -19,7 +20,7 @@ public:
     void stay();
     void setLeftCorrection(unsigned int corr);
     void setRightCorrection(unsigned int corr);
-    uint8_t* handleMessage(uint8_t* messsage); 
+    String handleMessage(const String& payload); 
 
     Driver& m_driver;
 };
