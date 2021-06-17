@@ -30,7 +30,17 @@ make
 ```bash
 pio run
 pio run -t upload
+or:
+    make -f makefile upload
 ```
+
+# Prepare and run entity tests 
+
+```bash
+./setup.sh
+./run_entity.sh
+```
+
 # Images (outdated)
 
 ![image info](./images/robot1.jpg)
