@@ -81,8 +81,6 @@ void startMDNS()
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t lenght)
 {
-    String robot_answer;
-    robot_answer.reserve(16); //!!!!! magic number
     String received;
     received.reserve(lenght);
     received = reinterpret_cast<char*>(payload);
@@ -103,11 +101,16 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t lenght)
         case WStype_TEXT: 
         {
             Serial.println("Received :" + received);
-            robot_answer = robot_ptr->handleMessage(received);
-            Serial.println("Sending robot answer: " + robot_answer);
-            webSocket.sendTXT(num, robot_answer);
-            robot_answer = "";
-            received = "";
+            if(robot_ptr->handleMessage(received[0]))
+            {
+                webSocket.sendTXT(num, "OK");
+                received = "";
+            }
+            else 
+            {
+                webSocket.sendTXT(num, "NOK");
+                webSocket.sendTXT(num, received);
+            }
             break;
         }
         case WStype_ERROR:

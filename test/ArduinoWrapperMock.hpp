@@ -3,7 +3,7 @@
 #include <gmock/gmock.h>
 #include "IArduinoWrapper.hpp"
 
-class ArduinoWrapperMock : public IArduinoWrapper
+class ArduinoWrapperMock : public IArduinoGpioWrapper
 {
 public:
     MOCK_CONST_METHOD2(pinMode, void(GpioNodemcuV2, GpioMode));

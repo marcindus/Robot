@@ -11,12 +11,3 @@ public:
     virtual void digitalWrite(GpioNodemcuV2 p_pin, GpioDigitalValue p_value) const = 0;
 };
 
-
-class IArduinoStringWrapper
-{
-public:
-    virtual ~IArduinoStringWrapper(){};
-    virtual void reserve(size_t size) const = 0;
-};
-
-

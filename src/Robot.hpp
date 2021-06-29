@@ -20,6 +20,6 @@ public:
     void stay();
     void setLeftCorrection(unsigned int corr);
     void setRightCorrection(unsigned int corr);
-    ArduinoStringWrapper handleMessage(const ArduinoStringWrapper& payload); 
+    int  handleMessage(const char command); 
     Driver& m_driver;
 };

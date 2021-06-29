@@ -10,8 +10,3 @@ public:
     void digitalWrite(GpioNodemcuV2 p_pin, GpioDigitalValue p_value) const override;
 };
 
-class ArduinoStringWrapper : public IArduinoStringWrapper
-{
-public:
-    void reserve(size_t size) const override;
-};

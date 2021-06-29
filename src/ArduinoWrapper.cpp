@@ -35,6 +35,3 @@ void ArduinoGpioWrapper::digitalWrite(GpioNodemcuV2 p_pin, GpioDigitalValue p_va
     ::digitalWrite(static_cast<unsigned>(p_pin), static_cast<unsigned>(p_value));
 };
 
-void ArduinoStringWrapper::reserve(size_t size) const
-{
-};

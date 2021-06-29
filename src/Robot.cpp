@@ -60,39 +60,39 @@ void Robot::stay()
     m_driver.stay();
 }
 
-ArduinoStringWrapper Robot::handleMessage(const ArduinoStringWrapper& payload)
+int Robot::handleMessage(const char command)
 {
-    ArduinoStringWrapper msg;
-    msg.reserve(8);
 
-    if(payload[0] == '#')
+//do map with commands here
+    if(command == '#')
     {
-    //    uint32_t correction  = (uint32_t) strtol((const char *) &payload[1], NULL, 16);
+    //    uint32_t correction  = (uint32_t) strtol((const char *) &command[1], NULL, 16);
     //uint32_t correction = 1;
         // robot_ptr->setCorrection(correction);
     //   msg << "Correction " << correction;
     }
-    else if (payload[0] == 'F') 
+    else if (command == 'F') 
     { 
-        msg =  "Forward";
+       return 1;
     }
-    else if (payload[0] == 'L')
+    else if (command == 'L')
     {
-        msg =  "Left";
+
+       return 1;
     }
-    else if (payload[0] == 'R')
+    else if (command == 'R')
     { 
-        msg = "Right";
+       return 1;
     }
-    else if (payload[0] == 'B')
+    else if (command == 'B')
     { 
-        msg = "Backward"; 
+       return 1;
     }
-    else if (payload[0] == 'S')
+    else if (command == 'S')
     { 
-        msg = "Stop"; 
+       return 1;
     }
-    else if (payload[0] == 'D')
+    else if (command == 'D')
     {  
        //int dist =  getDistance();
        //char arr[10] = "";
@@ -100,7 +100,7 @@ ArduinoStringWrapper Robot::handleMessage(const ArduinoStringWrapper& payload)
        //Serial.print(" Distance ");
        //webSocket.sendTXT(num, arr);
      }
-    return  msg;
+    return  0;
 }
 
 
