@@ -4,7 +4,7 @@
 class RobotBuilder
 {
 public:
-    RobotBuilder(IArduinoWrapper& nodemcuWrapper)
+    RobotBuilder(IArduinoGpioWrapper& nodemcuWrapper)
         : nodemcu(nodemcuWrapper),
           pin_A_speed(new GpioPort(nodemcu, GpioNodemcuV2::D1, GpioMode::Pwm)),
           pin_A_direction(new GpioPort(nodemcu, GpioNodemcuV2::D3, GpioMode::Output)),
@@ -27,7 +27,7 @@ public:
     std::unique_ptr<Robot> build() { return std::unique_ptr<Robot>(new Robot(m_driver)); }
 
 private:
-    IArduinoWrapper& nodemcu;
+    IArduinoGpioWrapper& nodemcu;
     std::unique_ptr<GpioPort> pin_A_speed;
     std::unique_ptr<GpioPort> pin_A_direction;
     std::unique_ptr<GpioPort> pin_B_speed;

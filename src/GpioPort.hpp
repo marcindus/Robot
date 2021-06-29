@@ -6,7 +6,7 @@
 class GpioPort : public IGpioPort
 {
 public:
-    GpioPort(IArduinoWrapper& p_arduinoWrapper, GpioNodemcuV2 p_pin, GpioMode p_mode);
+    GpioPort(IArduinoGpioWrapper& p_arduinoWrapper, GpioNodemcuV2 p_pin, GpioMode p_mode);
     ~GpioPort();
 
     void write(GpioDigitalValue p_value) const override;
@@ -15,7 +15,7 @@ public:
     GpioMode getMode() const override;
 
 private:
-    IArduinoWrapper& m_arduinoWrapper;
+    IArduinoGpioWrapper& m_arduinoWrapper;
     GpioNodemcuV2 m_gpioPin;
     GpioMode m_gpioMode;
 };

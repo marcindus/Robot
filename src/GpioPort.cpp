@@ -2,7 +2,7 @@
 #include "GpioException.hpp"
 #include "Utils.hpp"
 
-GpioPort::GpioPort(IArduinoWrapper& p_arduinoWrapper, GpioNodemcuV2 p_pin, GpioMode p_mode)
+GpioPort::GpioPort(IArduinoGpioWrapper& p_arduinoWrapper, GpioNodemcuV2 p_pin, GpioMode p_mode)
     : m_arduinoWrapper(p_arduinoWrapper), m_gpioPin(p_pin), m_gpioMode(p_mode)
 {
     LOG(" Pin:", p_pin,   " mode set: ",  p_mode);

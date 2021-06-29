@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Driver.hpp"
-#include "Arduino.h"
+#include "ArduinoWrapper.hpp"
 
 
 class Robot
@@ -20,7 +20,6 @@ public:
     void stay();
     void setLeftCorrection(unsigned int corr);
     void setRightCorrection(unsigned int corr);
-    String handleMessage(const String& payload); 
-
+    ArduinoStringWrapper handleMessage(const ArduinoStringWrapper& payload); 
     Driver& m_driver;
 };

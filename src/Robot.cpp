@@ -60,9 +60,9 @@ void Robot::stay()
     m_driver.stay();
 }
 
-String Robot::handleMessage(const String& payload)
+ArduinoStringWrapper Robot::handleMessage(const ArduinoStringWrapper& payload)
 {
-    String msg;
+    ArduinoStringWrapper msg;
     msg.reserve(8);
 
     if(payload[0] == '#')

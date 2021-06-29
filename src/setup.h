@@ -28,7 +28,7 @@ void handleFileUpload();
 ESP8266WiFiMulti wifiMulti;
 WebSocketsServer webSocket(81);
 const char* mdnsName = "esp8266";
-ArduinoWrapper nodemcuWrapper;
+ArduinoGpioWrapper nodemcuWrapper;
 RobotBuilder builder(nodemcuWrapper);
 std::unique_ptr<Robot> robot_ptr = nullptr;
 
