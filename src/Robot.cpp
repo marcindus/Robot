@@ -1,4 +1,5 @@
 #include "Robot.hpp"
+#include <iostream>
 
 Robot::Robot(Driver& p_driver) : m_driver(p_driver)
 {
@@ -22,7 +23,6 @@ void Robot::goBackward()
     m_driver.backward();
 }
 
-
 void Robot::goForward(unsigned int speed)
 {
     m_driver.forward(speed);
@@ -31,7 +31,6 @@ void Robot::goForward()
 {
     m_driver.forward();
 }
-
 
 void Robot::turnRight()
 {
@@ -60,48 +59,62 @@ void Robot::stay()
     m_driver.stay();
 }
 
-int Robot::handleMessage(const char command)
+int Robot::handleMessage(const char* command_str)
 {
-    std::map<char, std::function<void()>> commands;
+    RobotCommand command(command_str);
+    std::map<RobotCommand, std::function<void()>> commands;
 
-    commands['F'] = [this](){ goForward(); return 1; };
-    commands['B'] = [this](){ goBackward(); return 1; };
-    commands['L'] = [this](){ turnLeft(); return 1; };
-    commands['R'] = [this](){ turnRight(); return 1; };
-    commands['S'] = [this](){ stay(); return 1; };
+    commands[RobotCommand("F")] = [this]() {
+        goForward();
+        return 1;
+    };
+    commands[RobotCommand("B")] = [this]() {
+        goBackward();
+        return 1;
+    };
+    commands[RobotCommand("L")] = [this]() {
+        turnLeft();
+        return 1;
+    };
+    commands[RobotCommand("R")] = [this]() {
+        turnRight();
+        return 1;
+    };
+    commands[RobotCommand("S")] = [this]() {
+        stay();
+        return 1;
+    };
 
     commands.at(command)();
-/*
-   try
-    {
-        *out = operations.at(oper)(a, b);
-    }
-    catch (const std::out_of_range& ex)
-    {
-        return ErrorCode::BadCharacter;
-    }
-    catch (const CalculationException& ex)
-    {
-        return ex.errorCode;
-    }
-    return ErrorCode::OK;
+    /*
+       try
+        {
+            *out = operations.at(oper)(a, b);
+        }
+        catch (const std::out_of_range& ex)
+        {
+            return ErrorCode::BadCharacter;
+        }
+        catch (const CalculationException& ex)
+        {
+            return ex.errorCode;
+        }
+        return ErrorCode::OK;
 
-*/
-/*
-    else if (command == 'S')
-    { 
-       return 1;
-    }
-    else if (command == 'D')
-    {  
-       //int dist =  getDistance();
-       //char arr[10] = "";
-       //itoa(dist, arr,10);
-       //Serial.print(" Distance ");
-       //webSocket.sendTXT(num, arr);
-     }
-*/
-    return  0;
+    */
+    /*
+        else if (command == 'S')
+        {
+           return 1;
+        }
+        else if (command == 'D')
+        {
+           //int dist =  getDistance();
+           //char arr[10] = "";
+           //itoa(dist, arr,10);
+           //Serial.print(" Distance ");
+           //webSocket.sendTXT(num, arr);
+         }
+    */
+    return 0;
 }
-
-

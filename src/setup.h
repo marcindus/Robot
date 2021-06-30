@@ -91,22 +91,20 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t lenght)
             Serial.printf("[%u] Disconnected!\n", num);
             break;
 
-        case WStype_CONNECTED: 
-        {
+        case WStype_CONNECTED: {
             IPAddress ip = webSocket.remoteIP(num);
             Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
         }
         break;
 
-        case WStype_TEXT: 
-        {
+        case WStype_TEXT: {
             Serial.println("Received :" + received);
-            if(robot_ptr->handleMessage(received[0]))
+            if (robot_ptr->handleMessage(received.c_str()))
             {
                 webSocket.sendTXT(num, "OK");
                 received = "";
             }
-            else 
+            else
             {
                 webSocket.sendTXT(num, "NOK");
                 webSocket.sendTXT(num, received);
