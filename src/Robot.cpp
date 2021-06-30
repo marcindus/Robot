@@ -62,32 +62,32 @@ void Robot::stay()
 
 int Robot::handleMessage(const char command)
 {
+    std::map<char, std::function<void()>> commands;
 
-//do map with commands here
-    if(command == '#')
-    {
-    //    uint32_t correction  = (uint32_t) strtol((const char *) &command[1], NULL, 16);
-    //uint32_t correction = 1;
-        // robot_ptr->setCorrection(correction);
-    //   msg << "Correction " << correction;
-    }
-    else if (command == 'F') 
-    { 
-       return 1;
-    }
-    else if (command == 'L')
-    {
+    commands['F'] = [this](){ goForward(); return 1; };
+    commands['B'] = [this](){ goBackward(); return 1; };
+    commands['L'] = [this](){ turnLeft(); return 1; };
+    commands['R'] = [this](){ turnRight(); return 1; };
+    commands['S'] = [this](){ stay(); return 1; };
 
-       return 1;
+    commands.at(command)();
+/*
+   try
+    {
+        *out = operations.at(oper)(a, b);
     }
-    else if (command == 'R')
-    { 
-       return 1;
+    catch (const std::out_of_range& ex)
+    {
+        return ErrorCode::BadCharacter;
     }
-    else if (command == 'B')
-    { 
-       return 1;
+    catch (const CalculationException& ex)
+    {
+        return ex.errorCode;
     }
+    return ErrorCode::OK;
+
+*/
+/*
     else if (command == 'S')
     { 
        return 1;
@@ -100,6 +100,7 @@ int Robot::handleMessage(const char command)
        //Serial.print(" Distance ");
        //webSocket.sendTXT(num, arr);
      }
+*/
     return  0;
 }
 

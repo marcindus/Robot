@@ -1,8 +1,9 @@
 #pragma once
 
+#include <map>
+#include <functional>
 #include "Driver.hpp"
 #include "ArduinoWrapper.hpp"
-
 
 class Robot
 {
