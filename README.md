@@ -41,7 +41,7 @@ or:
 ./run_entity.sh
 ```
 
-# Images (outdated)
+# Images - robot on a test bench
 
 ![image info](./images/robot1.jpg)
 ![image info](./images/robot2.jpg)
